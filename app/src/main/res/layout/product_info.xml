@@ -42,7 +42,7 @@
         android:layout_below="@+id/topPanel_1"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/ic_chips"
+
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"/>
 
