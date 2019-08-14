@@ -1,18 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    android:orientation="vertical"
+    >
     <TextView
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Dr.Food"
+        android:textColor="#a0e8b8"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        />
 
-</android.support.constraint.ConstraintLayout>
+    <SearchView
+        android:id="@+id/search_ex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_name"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="30dp"
+        android:background="#F3FFFA" />
+
+    <ImageButton
+        android:id="@+id/chips_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/search_ex"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/chip_round" />
+
+    <ImageButton
+        android:id="@+id/can_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/search_ex"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/can_round" />
+
+    <ImageButton
+        android:id="@+id/icecream_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/search_ex"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icecream_round" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/icecream_button"
+        android:background="@drawable/drop_shadow"
+        >
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
+        android:background="#E4FDF3">
+
+        <ImageButton
+            android:id="@+id/human"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_person" />
+
+        <ImageButton
+            android:id="@+id/setting"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_settings" />
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/barcode"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/barcode_round"
+        android:scaleType="fitCenter" />
+
+
+
+</RelativeLayout>
