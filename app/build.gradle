@@ -32,6 +32,7 @@ dependencies {
 
     //구글 데이터 베이스 필요
     implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
     //인증 하기 위한 imple
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'

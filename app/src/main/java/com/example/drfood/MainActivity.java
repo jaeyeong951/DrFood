@@ -91,3 +91,43 @@ public class MainActivity extends Activity {
     }
 
 }
+
+/* //사용자가 DB에 있는 사용자인지 없는 사용자읹지 알기위해
+                            ChildEventListener childEventListener = new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    Log.d("여기까지","됬나?");
+                                    if(dataSnapshot.getKey().equals(UserUid)){
+                                        UserExgist = true;
+                                        Log.d("여기까지","됬나?");
+                                        //추후에 하자
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            };
+                            mDatabase.child("people").addChildEventListener(childEventListener);
+
+                            if(!UserExgist){
+                                Log.d("여기까지","됬나?");
+                                mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
+                            }
+                            */

@@ -4,6 +4,7 @@ package com.example.drfood;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,12 +23,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginPageAct extends AppCompatActivity {
 
+    private DatabaseReference mDatabase;
     private static final int RC_SIGN_IN = 10;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private Boolean UserExgist;
     private String UserUid;
     private String UserName;
     private String UserEmail;
@@ -42,7 +50,7 @@ public class LoginPageAct extends AppCompatActivity {
                 .requestIdToken("1061305272353-jph2miao034qttglvevvnig9nqe6k24r.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mGoogleSignInClient = GoogleSignIn.getClient(LoginPageAct.this, gso);
 
         SignInButton btn = (SignInButton)findViewById(R.id.login_button);
@@ -116,18 +124,57 @@ public class LoginPageAct extends AppCompatActivity {
                             UserUid = user.getUid();
                             UserName = user.getDisplayName();
                             UserEmail = user.getEmail();
+                            UserExgist = false;
+                            Log.d("UserUid", UserUid);
+                            Log.d("UserName",UserName);
+                            Log.d("UserEmail", UserEmail);
 
 
+                            //사용자가 DB에 있는 사용자인지 없는 사용자읹지 알기위해
+                            ChildEventListener childEventListener = new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    Log.d("여기까지","됬나?");
+                                    if(dataSnapshot.getKey().equals(UserUid)){
+                                        UserExgist = true;
+                                        Log.d("여기까지","됬나?");
+                                        //추후에 하자
+                                    }
+                                }
 
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            };
+                            mDatabase.child("people").addChildEventListener(childEventListener);
+
+                            if(!UserExgist){
+                                Log.d("여기까지","됬나?");
+                                mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
+                            }
 
                             //updateUI(user);
                             Intent intent = new Intent();
                             intent.putExtra("UserUid",UserUid);
                             intent.putExtra("UserName", UserName);
                             intent.putExtra("UserEmail",UserEmail);
-                            Log.d("UserUid", UserUid);
-                            Log.d("UserName",UserName);
-                            Log.d("UserEmail", UserEmail);
+
                             setResult(3000,intent);
                             finish();
                         } else {
