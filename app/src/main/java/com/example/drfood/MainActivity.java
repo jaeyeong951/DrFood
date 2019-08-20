@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,7 +17,11 @@ public class MainActivity extends Activity {
 
     ImageButton startButton;
 
+
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
+    private String UserUid;
+    private String UserEmail;
+    private String UserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
+
+        Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
+
+        startActivityForResult(Go_Login_Page, 3000);
+        //3000은 로그인
+
+
 
         getCameraPermission();
 
@@ -66,6 +78,15 @@ public class MainActivity extends Activity {
         if (requestCode == 1001) {
             String result = data.getStringExtra("key");
             Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        }
+        else if(requestCode == 3000){
+            UserUid = data.getStringExtra("UserUid");
+            UserName = data.getStringExtra("UserName");
+            UserEmail = data.getStringExtra("UserEmail");
+            Log.d("UserUid_Main", UserUid);
+            Log.d("UserName_Main",UserName);
+            Log.d("UserEmail_Main", UserEmail);
+
         }
     }
 
