@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "1061305272353",
+    "firebase_url": "https://contest-pnu.firebaseio.com",
+    "project_id": "contest-pnu",
+    "storage_bucket": "contest-pnu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061305272353:android:5659c43f70b3ad62",
+        "android_client_info": {
+          "package_name": "com.example.drfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061305272353-qpvvqr95t4td6l9ebcheonp7vmm26qqa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drfood",
+            "certificate_hash": "5e9c94948ec51bfa6867e8fb6202b4372f97046f"
+          }
+        },
+        {
+          "client_id": "1061305272353-vfi51tp220vkiilj9ll2532jei0o6ef5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drfood",
+            "certificate_hash": "d1ad206c1f6465fc6fcfd1093696f3c169328ff4"
+          }
+        },
+        {
+          "client_id": "1061305272353-jph2miao034qttglvevvnig9nqe6k24r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBIF38czOQzKD4GUkI98luj83rdxAtcXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061305272353-jph2miao034qttglvevvnig9nqe6k24r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061305272353:android:13c3c6a65bcbec53",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061305272353-moojefvigu9qr0im0vadp0qldvrkavuo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "d1ad206c1f6465fc6fcfd1093696f3c169328ff4"
+          }
+        },
+        {
+          "client_id": "1061305272353-jph2miao034qttglvevvnig9nqe6k24r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBIF38czOQzKD4GUkI98luj83rdxAtcXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061305272353-jph2miao034qttglvevvnig9nqe6k24r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
