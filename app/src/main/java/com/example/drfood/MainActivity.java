@@ -3,18 +3,29 @@ package com.example.drfood;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.BufferedInputStream;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class MainActivity extends Activity {
 
     ImageButton startButton;
+    ImageButton Button;
 
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
 
@@ -23,7 +34,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//
+//        StrictMode.setThreadPolicy(policy);
+
+
+
+
+
+
+
+
+
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
+        Button = findViewById(R.id.chips_button);
 
         getCameraPermission();
 
@@ -37,6 +62,13 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent goNextActivity = new Intent(getApplicationContext(), QRCodeScan.class);
                 startActivityForResult(goNextActivity,1001);
+            }
+        });
+
+        Button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //new PharmParser();
             }
         });
     }
@@ -69,4 +101,76 @@ public class MainActivity extends Activity {
         }
     }
 
-}
+//    class PharmParser {
+//
+//        //public final static String PHARM_URL = "http://openapi.hira.or.kr/openapi/service/pharmacyInfoService/getParmacyBasisList";
+//
+//    public PharmParser() {
+//        try {
+//            apiParserSearch();
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
+//        /**
+//         *
+//         * @throws Exception
+//         */
+//        public void apiParserSearch() throws Exception {
+//                        //Your code goes here
+//                        URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm=빈츠");
+//
+//                        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+//                        factory.setNamespaceAware(true);
+//                        XmlPullParser xpp = factory.newPullParser();
+//                        BufferedInputStream bis = new BufferedInputStream(url.openStream());
+//                        xpp.setInput(bis, "utf-8");
+//
+//                        String tag = null;
+//                        int event_type = xpp.getEventType();
+//
+//                        ArrayList<String> list = new ArrayList<String>();
+//
+//                        String addr = null;
+//                        while (event_type != XmlPullParser.END_DOCUMENT) {
+//                            if (event_type == XmlPullParser.START_TAG) {
+//                                tag = xpp.getName();
+//                            } else if (event_type == XmlPullParser.TEXT) {
+//                                /**
+//                                 * 성분만 가져와 본다.
+//                                 */
+//                                if(tag.equals("rawmtrl")){
+//                                    addr = xpp.getText();
+//                                }
+//                            } else if (event_type == XmlPullParser.END_TAG) {
+//                                tag = xpp.getName();
+//                                if (tag.equals("item")) {
+//                                    list.add(addr);
+//                                }
+//                                //item별로 분리
+//                            }
+//
+//                            event_type = xpp.next();
+//                        }
+//                printList(list);
+//            }
+//        }
+//
+//        /**
+//         * 결과 값을 출력해본다.
+//         */
+//        private void printList(ArrayList<String> list){
+//            for(String entity : list){
+//                //System.out.println(entity);
+//                Log.e("과자 성분",entity);
+//            }
+//
+//
+//        }
+
+
+    }
+

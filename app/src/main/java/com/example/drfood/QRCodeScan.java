@@ -14,6 +14,16 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+
+//
+//import java.io.BufferedInputStream;
+//import java.net.URL;
+//import java.util.ArrayList;
+//
+//import org.xmlpull.v1.XmlPullParser;
+//import org.xmlpull.v1.XmlPullParserFactory;
+
+
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -30,6 +40,9 @@ public class QRCodeScan extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_scan);
+
+
+
 
         cameraSurface = (SurfaceView) findViewById(R.id.cameraSurface); // SurfaceView 선언 :: Boilerplate
         backbutton = findViewById(R.id.back_button);
