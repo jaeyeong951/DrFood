@@ -7,15 +7,27 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.BufferedInputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends Activity {
 
     ImageButton startButton;
     ImageButton Button;
+    materialParser pharm;
 
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
 
@@ -28,13 +40,6 @@ public class MainActivity extends Activity {
 //        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //
 //        StrictMode.setThreadPolicy(policy);
-
-
-
-
-
-
-
 
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
@@ -51,20 +56,21 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent goNextActivity = new Intent(getApplicationContext(), QRCodeScan.class);
-                startActivityForResult(goNextActivity,1001);
+                startActivityForResult(goNextActivity, 1001);
             }
         });
 
-        Button.setOnClickListener(new View.OnClickListener(){
+        Button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                //new PharmParser();
+            public void onClick(View v) {
+                pharm = new materialParser();
+                pharm.execute();
             }
         });
     }
 
     private boolean getCameraPermission() {
-        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             // 권한이 왜 필요한지 설명이 필요한가?
@@ -87,80 +93,84 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
             String result = data.getStringExtra("key");
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
     }
 
-//    class PharmParser {
-//
-//        //public final static String PHARM_URL = "http://openapi.hira.or.kr/openapi/service/pharmacyInfoService/getParmacyBasisList";
-//
-//    public PharmParser() {
-//        try {
-//            apiParserSearch();
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
-//
-//
-//        /**
-//         *
-//         * @throws Exception
-//         */
-//        public void apiParserSearch() throws Exception {
-//                        //Your code goes here
-//                        URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm=빈츠");
-//
-//                        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-//                        factory.setNamespaceAware(true);
-//                        XmlPullParser xpp = factory.newPullParser();
-//                        BufferedInputStream bis = new BufferedInputStream(url.openStream());
-//                        xpp.setInput(bis, "utf-8");
-//
-//                        String tag = null;
-//                        int event_type = xpp.getEventType();
-//
-//                        ArrayList<String> list = new ArrayList<String>();
-//
-//                        String addr = null;
-//                        while (event_type != XmlPullParser.END_DOCUMENT) {
-//                            if (event_type == XmlPullParser.START_TAG) {
-//                                tag = xpp.getName();
-//                            } else if (event_type == XmlPullParser.TEXT) {
-//                                /**
-//                                 * 성분만 가져와 본다.
-//                                 */
-//                                if(tag.equals("rawmtrl")){
-//                                    addr = xpp.getText();
-//                                }
-//                            } else if (event_type == XmlPullParser.END_TAG) {
-//                                tag = xpp.getName();
-//                                if (tag.equals("item")) {
-//                                    list.add(addr);
-//                                }
-//                                //item별로 분리
-//                            }
-//
-//                            event_type = xpp.next();
-//                        }
-//                printList(list);
-//            }
-//        }
-//
-//        /**
-//         * 결과 값을 출력해본다.
-//         */
-//        private void printList(ArrayList<String> list){
-//            for(String entity : list){
+    class materialParser extends AsyncTask<Void, Void, Void> {
+        String rawMaterial;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        //public final static String PHARM_URL = "http://openapi.hira.or.kr/openapi/service/pharmacyInfoService/getParmacyBasisList";
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm=빈츠");
+
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+                XmlPullParser xpp = factory.newPullParser();
+                BufferedInputStream bis = new BufferedInputStream(url.openStream());
+                xpp.setInput(bis, "utf-8");
+
+                String tag = null;
+                int event_type = xpp.getEventType();
+
+                ArrayList<String> materialList = new ArrayList<>();
+
+                while (event_type != XmlPullParser.END_DOCUMENT) {
+                    if (event_type == XmlPullParser.START_TAG) {
+                        tag = xpp.getName();
+                    } else if (event_type == XmlPullParser.TEXT) {
+                        /*
+                         * 성분만 가져와 본다.
+                         */
+                        if (tag.equals("rawmtrl")) {
+                            rawMaterial = xpp.getText();
+//                            Log.e("원재료",rawMaterial);
+                        }
+                    } else if (event_type == XmlPullParser.END_TAG) {
+                        tag = xpp.getName();
+                        if (tag.equals("item")) {
+                            Log.e("태그의 끝",rawMaterial);
+                            materialList.add(rawMaterial);
+                            for(int i = 0; i < materialList.size(); i++){
+                                Log.e("원쟈료등", materialList.get(i));
+                            }
+                        }
+                        //item별로 분리
+                    }
+                    event_type = xpp.next();
+                }
+                Iterator<String> list_it = materialList.iterator();
+                while(list_it.hasNext()){
+                    Log.e("뭔든","뭐든");
+                    //Log.e("원재료들",list_it.next());
+                    String a = list_it.next();
+                    Log.e("원재료들",a);
+                }
+                for(int i = 0; i < materialList.size(); i++){
+                    Log.e("원쟈료등", materialList.get(i));
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+//        private void printList(ArrayList<String> list) {
+//            for (String entity : list) {
 //                //System.out.println(entity);
-//                Log.e("과자 성분",entity);
+//                Log.e("과자 성분", entity);
+//                Log.e("뭐든", "뭐든");
 //            }
-//
-//
 //        }
 
 
     }
+}
 
