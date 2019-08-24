@@ -3,8 +3,8 @@ package com.example.drfood;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,41 +15,40 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.BufferedInputStream;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
     ImageButton startButton;
+    ImageButton Button;
 
-
-    private DatabaseReference mDatabase;
-    private String Snack_Name;
-    private boolean Exgist_Result;
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
-    private String UserUid;
-    private String UserEmail;
-    private String UserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //데이터 베이스 주소 가져오기
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//
+//        StrictMode.setThreadPolicy(policy);
+
+
+
+
+
+
+
+
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
-
-        Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
-
-        startActivityForResult(Go_Login_Page, 3000);
-        //3000은 로그인
-
-
+        Button = findViewById(R.id.chips_button);
 
         getCameraPermission();
 
@@ -63,6 +62,13 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent goNextActivity = new Intent(getApplicationContext(), QRCodeScan.class);
                 startActivityForResult(goNextActivity,1001);
+            }
+        });
+
+        Button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //new PharmParser();
             }
         });
     }
@@ -90,59 +96,81 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
-
-            final String result = data.getStringExtra("key");
+            String result = data.getStringExtra("key");
             Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-
-            ChildEventListener childEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    if(dataSnapshot.getKey().equals(result)){
-
-                        //데이터베이스 안에 존재하면 true 없으면 false
-                        Exgist_Result = true;
-
-                        Snack_Name = dataSnapshot.getValue().toString();
-
-
-
-                    }
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            };
-            mDatabase.child("food").child("snack").child("바코드").addChildEventListener(childEventListener);
-
-
-        }
-        else if(requestCode == 3000){
-            UserUid = data.getStringExtra("UserUid");
-            UserName = data.getStringExtra("UserName");
-            UserEmail = data.getStringExtra("UserEmail");
-            Log.d("UserUid_Main", UserUid);
-            Log.d("UserName_Main",UserName);
-            Log.d("UserEmail_Main", UserEmail);
-
         }
     }
 
-}
+//    class PharmParser {
+//
+//        //public final static String PHARM_URL = "http://openapi.hira.or.kr/openapi/service/pharmacyInfoService/getParmacyBasisList";
+//
+//    public PharmParser() {
+//        try {
+//            apiParserSearch();
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
+//        /**
+//         *
+//         * @throws Exception
+//         */
+//        public void apiParserSearch() throws Exception {
+//                        //Your code goes here
+//                        URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm=빈츠");
+//
+//                        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+//                        factory.setNamespaceAware(true);
+//                        XmlPullParser xpp = factory.newPullParser();
+//                        BufferedInputStream bis = new BufferedInputStream(url.openStream());
+//                        xpp.setInput(bis, "utf-8");
+//
+//                        String tag = null;
+//                        int event_type = xpp.getEventType();
+//
+//                        ArrayList<String> list = new ArrayList<String>();
+//
+//                        String addr = null;
+//                        while (event_type != XmlPullParser.END_DOCUMENT) {
+//                            if (event_type == XmlPullParser.START_TAG) {
+//                                tag = xpp.getName();
+//                            } else if (event_type == XmlPullParser.TEXT) {
+//                                /**
+//                                 * 성분만 가져와 본다.
+//                                 */
+//                                if(tag.equals("rawmtrl")){
+//                                    addr = xpp.getText();
+//                                }
+//                            } else if (event_type == XmlPullParser.END_TAG) {
+//                                tag = xpp.getName();
+//                                if (tag.equals("item")) {
+//                                    list.add(addr);
+//                                }
+//                                //item별로 분리
+//                            }
+//
+//                            event_type = xpp.next();
+//                        }
+//                printList(list);
+//            }
+//        }
+//
+//        /**
+//         * 결과 값을 출력해본다.
+//         */
+//        private void printList(ArrayList<String> list){
+//            for(String entity : list){
+//                //System.out.println(entity);
+//                Log.e("과자 성분",entity);
+//            }
+//
+//
+//        }
+
+
+    }
 
