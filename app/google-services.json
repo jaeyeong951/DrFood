@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1061305272353-si3b59gm57ir4800luml0vob2cjmlf8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drfood",
+            "certificate_hash": "5ff71a56cafebc9f0b20d0b45f445b869fa3e392"
+          }
+        },
+        {
           "client_id": "1061305272353-qpvvqr95t4td6l9ebcheonp7vmm26qqa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
