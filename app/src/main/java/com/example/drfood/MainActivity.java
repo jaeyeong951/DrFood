@@ -3,6 +3,8 @@ package com.example.drfood;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +15,20 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends Activity {
 
     ImageButton startButton;
 
 
+    private DatabaseReference mDatabase;
+    private String Snack_Name;
+    private boolean Exgist_Result;
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
     private String UserUid;
     private String UserEmail;
@@ -27,6 +38,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //데이터 베이스 주소 가져오기
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
 
@@ -76,8 +90,48 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
-            String result = data.getStringExtra("key");
+
+            final String result = data.getStringExtra("key");
             Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+
+            ChildEventListener childEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if(dataSnapshot.getKey().equals(result)){
+
+                        //데이터베이스 안에 존재하면 true 없으면 false
+                        Exgist_Result = true;
+
+                        Snack_Name = dataSnapshot.getValue().toString();
+
+
+
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            };
+            mDatabase.child("food").child("snack").child("바코드").addChildEventListener(childEventListener);
+
+
         }
         else if(requestCode == 3000){
             UserUid = data.getStringExtra("UserUid");
@@ -92,42 +146,3 @@ public class MainActivity extends Activity {
 
 }
 
-/* //사용자가 DB에 있는 사용자인지 없는 사용자읹지 알기위해
-                            ChildEventListener childEventListener = new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    Log.d("여기까지","됬나?");
-                                    if(dataSnapshot.getKey().equals(UserUid)){
-                                        UserExgist = true;
-                                        Log.d("여기까지","됬나?");
-                                        //추후에 하자
-                                    }
-                                }
-
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            };
-                            mDatabase.child("people").addChildEventListener(childEventListener);
-
-                            if(!UserExgist){
-                                Log.d("여기까지","됬나?");
-                                mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
-                            }
-                            */

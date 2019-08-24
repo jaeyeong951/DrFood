@@ -167,6 +167,8 @@ public class LoginPageAct extends AppCompatActivity {
                             if(!UserExgist){
                                 Log.d("여기까지","됬나?");
                                 mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
+                                mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
+                                //mDatabase.child("people").child(UserUid).child()
                             }
 
                             //updateUI(user);
