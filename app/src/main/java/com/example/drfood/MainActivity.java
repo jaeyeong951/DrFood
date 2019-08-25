@@ -3,17 +3,23 @@ package com.example.drfood;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -31,10 +37,28 @@ public class MainActivity extends Activity {
 
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
 
+    //데이터 베이스 쪽
+    private DatabaseReference mDatabase;
+    private String Snack_Name;
+    private boolean Exgist_Result;
+    private String UserUid;
+    private String UserEmail;
+    private String UserName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //데이터 베이스 주소 가져오기
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        //로그인 화면으로 넘어감
+        Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
+
+        startActivityForResult(Go_Login_Page, 3000);
+        //3000은 로그인
+
 
 
 //        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -92,8 +116,54 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
-            String result = data.getStringExtra("key");
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+            final String result = data.getStringExtra("key");
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show(); ChildEventListener childEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if(dataSnapshot.getKey().equals(result)){
+
+                        //데이터베이스 안에 존재하면 true 없으면 false
+                        Exgist_Result = true;
+
+                        Snack_Name = dataSnapshot.getValue().toString();
+                        Log.d("Snack name : ", Snack_Name);
+
+
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            };
+            mDatabase.child("food").child("snack").child("바코드").addChildEventListener(childEventListener);
+
+
+        }
+        else if(requestCode == 3000){
+            UserUid = data.getStringExtra("UserUid");
+            UserName = data.getStringExtra("UserName");
+            UserEmail = data.getStringExtra("UserEmail");
+            Log.d("UserUid_Main", UserUid);
+            Log.d("UserName_Main",UserName);
+            Log.d("UserEmail_Main", UserEmail);
+
         }
     }
 
@@ -130,7 +200,7 @@ public class MainActivity extends Activity {
                          */
                         if (tag.equals("rawmtrl")) {
                             if(!xpp.getText().equals("\n")){
-                            rawMaterial = xpp.getText();
+                                rawMaterial = xpp.getText();
                             }
                         }
                     } else if (event_type == XmlPullParser.END_TAG) {
@@ -170,4 +240,3 @@ public class MainActivity extends Activity {
 
     }
 }
-
