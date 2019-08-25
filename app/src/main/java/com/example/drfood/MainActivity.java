@@ -99,6 +99,7 @@ public class MainActivity extends Activity {
 
     class materialParser extends AsyncTask<Void, Void, Void> {
         String rawMaterial;
+        String tag;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -116,7 +117,6 @@ public class MainActivity extends Activity {
                 BufferedInputStream bis = new BufferedInputStream(url.openStream());
                 xpp.setInput(bis, "utf-8");
 
-                String tag = null;
                 int event_type = xpp.getEventType();
 
                 ArrayList<String> materialList = new ArrayList<>();
@@ -129,17 +129,16 @@ public class MainActivity extends Activity {
                          * 성분만 가져와 본다.
                          */
                         if (tag.equals("rawmtrl")) {
+                            if(!xpp.getText().equals("\n")){
                             rawMaterial = xpp.getText();
-//                            Log.e("원재료",rawMaterial);
+                            }
                         }
                     } else if (event_type == XmlPullParser.END_TAG) {
                         tag = xpp.getName();
                         if (tag.equals("item")) {
                             Log.e("태그의 끝",rawMaterial);
+                            System.out.println(rawMaterial);
                             materialList.add(rawMaterial);
-                            for(int i = 0; i < materialList.size(); i++){
-                                Log.e("원쟈료등", materialList.get(i));
-                            }
                         }
                         //item별로 분리
                     }
@@ -147,14 +146,12 @@ public class MainActivity extends Activity {
                 }
                 Iterator<String> list_it = materialList.iterator();
                 while(list_it.hasNext()){
-                    Log.e("뭔든","뭐든");
-                    //Log.e("원재료들",list_it.next());
                     String a = list_it.next();
                     Log.e("원재료들",a);
                 }
-                for(int i = 0; i < materialList.size(); i++){
-                    Log.e("원쟈료등", materialList.get(i));
-                }
+//                for(int i = 0; i < materialList.size(); i++){
+//                    Log.e("원쟈료등", materialList.get(i));
+//                }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
