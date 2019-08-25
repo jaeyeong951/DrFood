@@ -3,12 +3,13 @@ package com.example.drfood;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -53,7 +54,7 @@ public class LoginPageAct extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mGoogleSignInClient = GoogleSignIn.getClient(LoginPageAct.this, gso);
 
-        SignInButton btn = (SignInButton)findViewById(R.id.login_button);
+        SignInButton btn = (SignInButton)findViewById(R.id.sign_in_by_google_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

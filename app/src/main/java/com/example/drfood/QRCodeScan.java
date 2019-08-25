@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -13,6 +12,14 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
+
+import java.io.IOException;
 
 //
 //import java.io.BufferedInputStream;
@@ -21,14 +28,6 @@ import android.widget.ImageButton;
 //
 //import org.xmlpull.v1.XmlPullParser;
 //import org.xmlpull.v1.XmlPullParserFactory;
-
-
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
-
-import java.io.IOException;
 
 public class QRCodeScan extends Activity {
 
