@@ -36,6 +36,7 @@ dependencies {
     //인증 하기 위한 imple
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'androidx.core:core:1.0.2'
 
 }
 //구글 데이터 베이스 필요
