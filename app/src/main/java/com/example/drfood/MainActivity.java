@@ -27,7 +27,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.BufferedInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -44,6 +47,8 @@ public class MainActivity extends Activity {
     private String UserUid;
     private String UserEmail;
     private String UserName;
+    String rawMaterial;
+    String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +89,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pharm = new materialParser();
-                pharm.execute();
-            }
-        });
     }
 
     private boolean getCameraPermission() {
@@ -117,7 +115,8 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
             final String result = data.getStringExtra("key");
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show(); ChildEventListener childEventListener = new ChildEventListener() {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+            ChildEventListener childEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     if(dataSnapshot.getKey().equals(result)){
@@ -128,6 +127,8 @@ public class MainActivity extends Activity {
                         Snack_Name = dataSnapshot.getValue().toString();
                         Log.d("Snack name : ", Snack_Name);
 
+                        pharm = new materialParser();
+                        pharm.execute();
 
                     }
                 }
@@ -167,9 +168,8 @@ public class MainActivity extends Activity {
         }
     }
 
-    class materialParser extends AsyncTask<Void, Void, Void> {
-        String rawMaterial;
-        String tag;
+    class materialParser extends AsyncTask<String, String, String> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -177,9 +177,10 @@ public class MainActivity extends Activity {
 
         //public final static String PHARM_URL = "http://openapi.hira.or.kr/openapi/service/pharmacyInfoService/getParmacyBasisList";
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
             try {
-                URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm=빈츠");
+                URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm="
+                        + Snack_Name);
 
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(true);
@@ -206,37 +207,41 @@ public class MainActivity extends Activity {
                     } else if (event_type == XmlPullParser.END_TAG) {
                         tag = xpp.getName();
                         if (tag.equals("item")) {
-                            Log.e("태그의 끝",rawMaterial);
-                            System.out.println(rawMaterial);
+                            //Log.e("태그의 끝",rawMaterial);
+                            //System.out.println(rawMaterial);
                             materialList.add(rawMaterial);
                         }
                         //item별로 분리
                     }
                     event_type = xpp.next();
-                }
-                Iterator<String> list_it = materialList.iterator();
-                while(list_it.hasNext()){
-                    String a = list_it.next();
-                    Log.e("원재료들",a);
-                }
-//                for(int i = 0; i < materialList.size(); i++){
-//                    Log.e("원쟈료등", materialList.get(i));
-//                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
-            return null;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            }
+            return rawMaterial;
         }
 
-//        private void printList(ArrayList<String> list) {
-//            for (String entity : list) {
-//                //System.out.println(entity);
-//                Log.e("과자 성분", entity);
-//                Log.e("뭐든", "뭐든");
-//            }
-//        }
+        @Override
+        protected void onPostExecute(String material){
+            String[] rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,");
+//            List<String> rawMatertialSplitedArray = new LinkedList<>(Arrays.asList(rawMaterialSplited));
+            List<String> rawMaterialSplitedArray = new ArrayList<>();
+            for(int i = 0; i < rawMaterialSplited.length; i++){
+                rawMaterialSplitedArray.add(rawMaterialSplited[i]);
+            }
+            //이 밑은 재료중 ~산이라는 글자가 포함되면 삭제
+            //검토중
+            Iterator<String> rawIt = rawMaterialSplitedArray.iterator();
+            while(rawIt.hasNext()){
+                if(rawIt.next().contains("산")){
+                    rawIt.remove();
+                }
+            }
+            for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
+                Log.e("재려전부다",rawMaterialSplitedArray.get(i));
+            }
 
-
+        }
     }
 }

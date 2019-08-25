@@ -21,6 +21,7 @@
 
         >
         <activity android:name=".MainActivity">
+            android:configChanges="screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -28,9 +29,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".QRCodeScan">
-
+            android:configChanges="screenSize|orientation">
         </activity>
-        <activity android:name=".LoginPageAct"></activity>
+        <activity android:name=".LoginPageAct">
+            android:configChanges="screenSize|orientation">
+        </activity>
     </application>
 
 </manifest>
