@@ -31,6 +31,9 @@ public class Product_Information extends AppCompatActivity {
         setContentView(R.layout.product_info);
         TextView pdName = findViewById(R.id.product_name);
         pdImage = findViewById(R.id.product_image);
+        safe_bar = findViewById(R.id.safe_bar_xml);
+        LinearLayout.LayoutParams lay = (LinearLayout.LayoutParams) safe_bar.getLayoutParams();
+        lay.weight = 2;
 
         Intent intent = getIntent();
         product_image = intent.getStringExtra("이미지");

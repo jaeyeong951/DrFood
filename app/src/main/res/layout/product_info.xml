@@ -125,25 +125,31 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/safe_bar_xml"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#8BC34A">
+                android:background="#8BC34A"
+                android:orientation="horizontal">
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/care_bar_xml"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#FFEB3B">
+                android:background="#FFEB3B"
+                android:orientation="horizontal">
             </LinearLayout>
 
             <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#F3FF2020">
-        </LinearLayout>
+                android:id="@+id/harm_bar_xml"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F3FF2020"
+                android:orientation="horizontal">
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
