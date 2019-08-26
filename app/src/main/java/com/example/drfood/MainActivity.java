@@ -269,9 +269,19 @@ public class MainActivity extends Activity {
             }
             for(int i = 0; i < allergyListSplitedArray.size(); i++){
                 Log.e("알러지전부다",allergyListSplitedArray.get(i));
-                
+
             }
             Log.e("이미지URL",imgUrl);
+            Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
+            intent_PDInfo.putExtra("이미지",imgUrl);
+            intent_PDInfo.putExtra("이름",Snack_Name);
+            intent_PDInfo.putExtra("성분",rawMaterialSplited);
+            intent_PDInfo.putExtra("알러지",allergyListSplited);
+            startActivity(intent_PDInfo);
+
         }
+
+
     }
+
 }

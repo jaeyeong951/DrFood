@@ -38,6 +38,7 @@
         </activity>
 
         <activity android:name=".Product_Information"
+            android:theme="@style/AppTheme"
             android:configChanges="screenSize|orientation">
         </activity>
     </application>
