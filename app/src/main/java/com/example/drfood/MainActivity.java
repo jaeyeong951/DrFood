@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -52,6 +53,14 @@ public class MainActivity extends Activity {
     String tag;
     String allergy;
 
+    //additives관련
+    int Additives_Num = 0;
+    int Num_Size = 0;
+    String Additives_EWG[] = new String[100];
+    String Additives_Name[] = new String[100];
+    String No_Additives_Name[] = new String[100];
+    int No_Additives_Num = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +68,7 @@ public class MainActivity extends Activity {
 
         //데이터 베이스 주소 가져오기
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         //로그인 화면으로 넘어감
         Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
@@ -244,7 +254,7 @@ public class MainActivity extends Activity {
             String[] rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,");
             String[] allergyListSplited = allergy.split("\\,|\\s");
 
-            List<String> rawMaterialSplitedArray = new ArrayList<>();
+            final List<String> rawMaterialSplitedArray = new ArrayList<>();
             List<String> allergyListSplitedArray = new ArrayList<>();
             for(int i = 0; i < rawMaterialSplited.length; i++){
                 rawMaterialSplitedArray.add(rawMaterialSplited[i]);
@@ -252,10 +262,25 @@ public class MainActivity extends Activity {
             for(int i = 0; i < allergyListSplited.length; i++){
                 allergyListSplitedArray.add(allergyListSplited[i]);
             }
+
+
+
+
+
+
+
+
             //이 밑은 재료중 ~산이라는 글자가 포함되면 삭제
             //검토중
             Iterator<String> rawIt = rawMaterialSplitedArray.iterator();
             Iterator<String> allergyIt = allergyListSplitedArray.iterator();
+            Num_Size = rawMaterialSplitedArray.size();
+            Additives_Num = 0;
+            No_Additives_Num = 0;
+            Boolean Temp_Exgist = false;
+            int Temp = 0;
+            final int Where_Exgist_i[] = new int[100];
+
             while(rawIt.hasNext()){
                 if(rawIt.next().contains("산")){
                     rawIt.remove();
@@ -268,7 +293,52 @@ public class MainActivity extends Activity {
             }
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
                 Log.e("재려전부다",rawMaterialSplitedArray.get(i));
+
+                No_Additives_Name[i] = rawMaterialSplitedArray.get(i);
+                final int i_num = i;
+
+                mDatabase.child("additives").hashCode();
+
+               mDatabase.child("additives").addChildEventListener(new ChildEventListener() {
+                   @Override
+                   public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                       if(dataSnapshot.getKey().equals(rawMaterialSplitedArray.get(i_num))){
+                           Log.d("재영이","ㅅㅂ");
+                           Additives_EWG[Additives_Num] = dataSnapshot.child("EWG").getValue().toString();
+                           Additives_Name[Additives_Num] = dataSnapshot.getKey();
+                           No_Additives_Name[i_num] = "";
+                           //Where_Exgist_i[Additives_Num] = i_num;
+                           Log.d("재영이빠순아"+ Additives_Num +"  "  + Additives_Name[Additives_Num], Additives_EWG[Additives_Num]);
+                           /*for(int j = 0; j < rawMaterialSplitedArray.size(); j++) {
+                               Log.d("재영이빠돌이" + "  ", No_Additives_Name[j]);
+                           }*///이거 부분 확인하면 No_Additives_Name에 데이터베이스에 있는 부분 "" 로 처리함.
+                           Additives_Num++;
+                       }
+                   }
+
+                   @Override
+                   public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                   }
+
+                   @Override
+                   public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                   }
+
+                   @Override
+                   public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                   }
+               });
+
+
             }
+
+
+
             for(int i = 0; i < allergyListSplitedArray.size(); i++){
                 Log.e("알러지전부다",allergyListSplitedArray.get(i));
 
@@ -282,8 +352,6 @@ public class MainActivity extends Activity {
             startActivity(intent_PDInfo);
 
         }
-
-
     }
 
 }
