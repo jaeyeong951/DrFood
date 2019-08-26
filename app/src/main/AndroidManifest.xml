@@ -22,17 +22,22 @@
         >
         <activity android:name=".MainActivity"
             android:configChanges="screenSize|orientation">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".QRCodeScan"
             android:configChanges="screenSize|orientation">
         </activity>
+
         <activity android:name=".LoginPageAct"
+            android:configChanges="screenSize|orientation">
+        </activity>
+
+        <activity android:name=".Product_Information"
             android:configChanges="screenSize|orientation">
         </activity>
     </application>
