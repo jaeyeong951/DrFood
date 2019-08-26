@@ -269,10 +269,9 @@ public class MainActivity extends Activity {
             }
             for(int i = 0; i < allergyListSplitedArray.size(); i++){
                 Log.e("알러지전부다",allergyListSplitedArray.get(i));
-
+                
             }
             Log.e("이미지URL",imgUrl);
-
         }
     }
 }
