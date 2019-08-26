@@ -47,8 +47,10 @@ public class MainActivity extends Activity {
     private String UserUid;
     private String UserEmail;
     private String UserName;
+    String imgUrl;
     String rawMaterial;
     String tag;
+    String allergy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +193,7 @@ public class MainActivity extends Activity {
                 int event_type = xpp.getEventType();
 
                 ArrayList<String> materialList = new ArrayList<>();
+                ArrayList<String> allergyList = new ArrayList<>();
 
                 while (event_type != XmlPullParser.END_DOCUMENT) {
                     if (event_type == XmlPullParser.START_TAG) {
@@ -204,12 +207,24 @@ public class MainActivity extends Activity {
                                 rawMaterial = xpp.getText();
                             }
                         }
+                        else if(tag.equals("imgurl1")){
+                            if(!xpp.getText().equals("\n")){
+                                imgUrl = xpp.getText();
+                            }
+                        }
+                        else if(tag.equals("allergy")){
+                            if(!xpp.getText().equals("\n")) {
+                                allergy = xpp.getText();
+                            }
+                            //Log.e("알러지",allergy);
+                        }
                     } else if (event_type == XmlPullParser.END_TAG) {
                         tag = xpp.getName();
                         if (tag.equals("item")) {
                             //Log.e("태그의 끝",rawMaterial);
                             //System.out.println(rawMaterial);
                             materialList.add(rawMaterial);
+                            allergyList.add(allergy);
                         }
                         //item별로 분리
                     }
@@ -225,22 +240,38 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String material){
             String[] rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,");
-//            List<String> rawMatertialSplitedArray = new LinkedList<>(Arrays.asList(rawMaterialSplited));
+            String[] allergyListSplited = allergy.split("\\,|\\s");
+
             List<String> rawMaterialSplitedArray = new ArrayList<>();
+            List<String> allergyListSplitedArray = new ArrayList<>();
             for(int i = 0; i < rawMaterialSplited.length; i++){
                 rawMaterialSplitedArray.add(rawMaterialSplited[i]);
+            }
+            for(int i = 0; i < allergyListSplited.length; i++){
+                allergyListSplitedArray.add(allergyListSplited[i]);
             }
             //이 밑은 재료중 ~산이라는 글자가 포함되면 삭제
             //검토중
             Iterator<String> rawIt = rawMaterialSplitedArray.iterator();
+            Iterator<String> allergyIt = allergyListSplitedArray.iterator();
             while(rawIt.hasNext()){
                 if(rawIt.next().contains("산")){
                     rawIt.remove();
                 }
             }
+            while(allergyIt.hasNext()){
+                if(allergyIt.next().equals("함유")){
+                    allergyIt.remove();
+                }
+            }
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
                 Log.e("재려전부다",rawMaterialSplitedArray.get(i));
             }
+            for(int i = 0; i < allergyListSplitedArray.size(); i++){
+                Log.e("알러지전부다",allergyListSplitedArray.get(i));
+
+            }
+            Log.e("이미지URL",imgUrl);
 
         }
     }
