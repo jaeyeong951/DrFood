@@ -46,6 +46,7 @@ public class LoginPageAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
+
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("1061305272353-jph2miao034qttglvevvnig9nqe6k24r.apps.googleusercontent.com")
@@ -70,6 +71,8 @@ public class LoginPageAct extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
         //updateUI(currentUser);
     }
 

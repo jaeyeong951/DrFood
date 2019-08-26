@@ -28,16 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".QRCodeScan"
             android:configChanges="screenSize|orientation">
         </activity>
-
         <activity android:name=".LoginPageAct"
-            android:configChanges="screenSize|orientation">
-        </activity>
-
-        <activity android:name=".Product_Information"
             android:configChanges="screenSize|orientation">
         </activity>
     </application>

@@ -63,7 +63,9 @@ public class MainActivity extends Activity {
         //로그인 화면으로 넘어감
         Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
 
+
         startActivityForResult(Go_Login_Page, 3000);
+
         //3000은 로그인
 
 
