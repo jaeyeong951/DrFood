@@ -17,6 +17,7 @@
         android:src="@drawable/ic_lock_outline_white" />
 
 
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_by_google_button"
         android:layout_width="wrap_content"
