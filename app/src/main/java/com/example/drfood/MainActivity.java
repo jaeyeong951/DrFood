@@ -61,6 +61,8 @@ public class MainActivity extends Activity {
     String No_Additives_Name[] = new String[100];
     int No_Additives_Num = 0;
 
+    Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,9 +132,10 @@ public class MainActivity extends Activity {
         if (requestCode == 1001) {
             final String result = data.getStringExtra("key");
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-            ChildEventListener childEventListener = new ChildEventListener() {
+
+            mDatabase.child("food").child("snack").child("바코드").child(result).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.getKey().equals(result)){
 
                         //데이터베이스 안에 존재하면 true 없으면 false
@@ -148,27 +151,10 @@ public class MainActivity extends Activity {
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            };
-            mDatabase.child("food").child("snack").child("바코드").addChildEventListener(childEventListener);
-
+            });
 
         }
         else if(requestCode == 3000){
@@ -180,6 +166,8 @@ public class MainActivity extends Activity {
             Log.d("UserEmail_Main", UserEmail);
 
         }
+
+
     }
 
     class materialParser extends AsyncTask<String, String, String> {
@@ -293,47 +281,28 @@ public class MainActivity extends Activity {
             }
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
                 Log.e("재려전부다",rawMaterialSplitedArray.get(i));
-
-                No_Additives_Name[i] = rawMaterialSplitedArray.get(i);
+                final String temp = rawMaterialSplitedArray.get(i);
                 final int i_num = i;
 
-                mDatabase.child("additives").hashCode();
+                mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists() && (dataSnapshot.getKey() != "additives")) {
+                            Additives_EWG[Additives_Num] = dataSnapshot.child("EWG").getValue().toString();
+                            Additives_Name[Additives_Num] = dataSnapshot.getKey();
+                            Log.d("재영이빠순아" + Additives_Num + "  " + Additives_Name[Additives_Num], Additives_EWG[Additives_Num]);
+                            Additives_Num++;
+                        }else if(dataSnapshot.getKey() != "additives"){
+                            No_Additives_Name[No_Additives_Num] = rawMaterialSplitedArray.get(i_num);
+                            Log.d("재영이빠순아"+ No_Additives_Num +"  "  , No_Additives_Name[No_Additives_Num]);
+                            No_Additives_Num++;
+                        }
+                    }
 
-               mDatabase.child("additives").addChildEventListener(new ChildEventListener() {
-                   @Override
-                   public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                       if(dataSnapshot.getKey().equals(rawMaterialSplitedArray.get(i_num))){
-                           Log.d("재영이","ㅅㅂ");
-                           Additives_EWG[Additives_Num] = dataSnapshot.child("EWG").getValue().toString();
-                           Additives_Name[Additives_Num] = dataSnapshot.getKey();
-                           No_Additives_Name[i_num] = "";
-                           //Where_Exgist_i[Additives_Num] = i_num;
-                           Log.d("재영이빠순아"+ Additives_Num +"  "  + Additives_Name[Additives_Num], Additives_EWG[Additives_Num]);
-                           /*for(int j = 0; j < rawMaterialSplitedArray.size(); j++) {
-                               Log.d("재영이빠돌이" + "  ", No_Additives_Name[j]);
-                           }*///이거 부분 확인하면 No_Additives_Name에 데이터베이스에 있는 부분 "" 로 처리함.
-                           Additives_Num++;
-                       }
-                   }
-
-                   @Override
-                   public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                   }
-
-                   @Override
-                   public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                   }
-
-                   @Override
-                   public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                   }
-
-                   @Override
-                   public void onCancelled(@NonNull DatabaseError databaseError) {
-                   }
-               });
-
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
 
             }
 
@@ -344,12 +313,17 @@ public class MainActivity extends Activity {
 
             }
             Log.e("이미지URL",imgUrl);
-            Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
+            //Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
             intent_PDInfo.putExtra("이미지",imgUrl);
             intent_PDInfo.putExtra("이름",Snack_Name);
             intent_PDInfo.putExtra("성분",rawMaterialSplited);
             intent_PDInfo.putExtra("알러지",allergyListSplited);
-            startActivity(intent_PDInfo);
+
+
+
+
+
+            //startActivity(intent_PDInfo);
 
         }
     }
