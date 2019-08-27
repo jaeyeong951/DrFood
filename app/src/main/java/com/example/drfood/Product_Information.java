@@ -25,7 +25,16 @@ public class Product_Information extends AppCompatActivity {
     Bitmap bitmap;
     LinearLayout safe_bar;
 
+    //Additive 관련 성분들도
+    String Additive_EWG[] = new String[100];
+    String Additive_Name[] = new String[100];
+    int Additive_Num;
 
+    String No_Additive_Name[] = new String[100];
+    int No_Additive_Num;
+
+    String rawMaterialSplitedArray[] = new String[100];
+    String allergyListSplitedArray[] = new String[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,30 @@ public class Product_Information extends AppCompatActivity {
         Intent intent = getIntent();
         product_image = intent.getStringExtra("이미지");
         product_name = intent.getStringExtra("이름");
+
+        //성분 관련들 Intent
+        Additive_EWG = intent.getExtras().getStringArray("성분EWG");
+        Additive_Name = intent.getExtras().getStringArray("성분Name");
+        Additive_Num = intent.getIntExtra("성분Num",1);
+
+        No_Additive_Name = intent.getExtras().getStringArray("No성분Name");
+       // No_Additive_Num = intent.getIntExtra("No성분Num", 1);
+
+        rawMaterialSplitedArray = intent.getExtras().getStringArray("성분");
+        allergyListSplitedArray = intent.getExtras().getStringArray("알러지");
+
+        Log.d("알러지" , allergyListSplitedArray[0]);
+
+        for(int i = 0; i < 15; i++){
+            Log.d("성분"+ i, rawMaterialSplitedArray[i]);
+
+        }
+
+        Log.d("성분EWG", Additive_EWG[0]);
+        Log.d("성분Name", Additive_Name[0]);
+        Log.d("성분Num", "" + Additive_Num);
+        Log.d("No성분Name", "" +No_Additive_Name[0] + No_Additive_Name[1] + No_Additive_Name[2]);
+        //Log.d("No성분Num", "" + No_Additive_Num);
 
 
         pdName.setText(product_name);

@@ -61,13 +61,17 @@ public class MainActivity extends Activity {
     String No_Additives_Name[] = new String[100];
     int No_Additives_Num = 0;
 
-    Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
+    String Intent_rawMaterialSplitedArray[] = new String[100];
+    String Intent_allergyListSplitedArray[] = new String[10];
+
+    Intent intent_PDInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
         //데이터 베이스 주소 가져오기
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -262,7 +266,7 @@ public class MainActivity extends Activity {
             //검토중
             Iterator<String> rawIt = rawMaterialSplitedArray.iterator();
             Iterator<String> allergyIt = allergyListSplitedArray.iterator();
-            Num_Size = rawMaterialSplitedArray.size();
+            Num_Size = 0;
             Additives_Num = 0;
             No_Additives_Num = 0;
             Boolean Temp_Exgist = false;
@@ -282,20 +286,32 @@ public class MainActivity extends Activity {
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
                 Log.e("재려전부다",rawMaterialSplitedArray.get(i));
                 final String temp = rawMaterialSplitedArray.get(i);
+                Intent_rawMaterialSplitedArray[i] = rawMaterialSplitedArray.get(i);
+                No_Additives_Name[i] = temp;
                 final int i_num = i;
 
-                mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
+                    mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists() && (dataSnapshot.getKey() != "additives")) {
                             Additives_EWG[Additives_Num] = dataSnapshot.child("EWG").getValue().toString();
                             Additives_Name[Additives_Num] = dataSnapshot.getKey();
+                            No_Additives_Name[i_num] = "";
                             Log.d("재영이빠순아" + Additives_Num + "  " + Additives_Name[Additives_Num], Additives_EWG[Additives_Num]);
                             Additives_Num++;
-                        }else if(dataSnapshot.getKey() != "additives"){
+                        }/*else if(dataSnapshot.getKey() != "additives"){
                             No_Additives_Name[No_Additives_Num] = rawMaterialSplitedArray.get(i_num);
-                            Log.d("재영이빠순아"+ No_Additives_Num +"  "  , No_Additives_Name[No_Additives_Num]);
+                            Log.d("재영이빠돌아"+ No_Additives_Num +"  "  , No_Additives_Name[No_Additives_Num]);
                             No_Additives_Num++;
+                        }*/
+                        if(i_num + 1 == rawMaterialSplitedArray.size() ){
+                            intent_PDInfo.putExtra("성분EWG", Additives_EWG);
+                            intent_PDInfo.putExtra("성분Name", Additives_Name);
+                            intent_PDInfo.putExtra("성분Num", Additives_Num);
+                            intent_PDInfo.putExtra("No성분Name", No_Additives_Name);
+                            //intent_PDInfo.putExtra("No성분Num", No_Additives_Num);
+                            Log.d("성분EWG", Additives_EWG.toString());
+                            startActivity(intent_PDInfo);
                         }
                     }
 
@@ -310,14 +326,15 @@ public class MainActivity extends Activity {
 
             for(int i = 0; i < allergyListSplitedArray.size(); i++){
                 Log.e("알러지전부다",allergyListSplitedArray.get(i));
+                Intent_allergyListSplitedArray[i] = allergyListSplitedArray.get(i);
 
             }
             Log.e("이미지URL",imgUrl);
             //Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
             intent_PDInfo.putExtra("이미지",imgUrl);
             intent_PDInfo.putExtra("이름",Snack_Name);
-            intent_PDInfo.putExtra("성분",rawMaterialSplited);
-            intent_PDInfo.putExtra("알러지",allergyListSplited);
+            intent_PDInfo.putExtra("성분",Intent_rawMaterialSplitedArray);
+            intent_PDInfo.putExtra("알러지",Intent_allergyListSplitedArray);
 
 
 
