@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
 
     ImageButton startButton;
     ImageButton Button;
+    ImageButton UserButton;
     materialParser pharm;
 
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
@@ -45,9 +46,7 @@ public class MainActivity extends Activity {
     private DatabaseReference mDatabase;
     private String Snack_Name;
     private boolean Exgist_Result;
-    private String UserUid;
-    private String UserEmail;
-    private String UserName;
+
     String imgUrl;
     String rawMaterial;
     String tag;
@@ -63,6 +62,12 @@ public class MainActivity extends Activity {
 
     String Intent_rawMaterialSplitedArray[] = new String[100];
     String Intent_allergyListSplitedArray[] = new String[10];
+
+    //Person(User) 정보관련
+    private String UserUid;
+    private String UserEmail;
+    private String UserName;
+
 
     Intent intent_PDInfo;
     Intent  User_Information;
@@ -96,6 +101,7 @@ public class MainActivity extends Activity {
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
         Button = findViewById(R.id.chips_button);
+        UserButton = findViewById(R.id.human);
 
         getCameraPermission();
 
@@ -109,6 +115,17 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent goNextActivity = new Intent(getApplicationContext(), QRCodeScan.class);
                 startActivityForResult(goNextActivity, 1001);
+            }
+        });
+
+        UserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User_Information.putExtra("UserUid", UserUid);
+                User_Information.putExtra("UserName", UserName);
+                User_Information.putExtra("UserEmail", UserEmail);
+                //User_Information.putExtra("UserUid", UserUid);
+                startActivity(User_Information);
             }
         });
 
