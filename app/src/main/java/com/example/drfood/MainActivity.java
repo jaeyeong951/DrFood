@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 //
 //        StrictMode.setThreadPolicy(policy);
         //사용자 화면으로 넘어가는 intent
-        User_Information = new Intent(MainActivity.this, Person_Information.class);
+        //User_Information = new Intent(MainActivity.this, Person_Information.class);
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
         Button = findViewById(R.id.chips_button);
@@ -218,8 +218,8 @@ public class MainActivity extends Activity {
 
                 ArrayList<String> materialList = new ArrayList<>();
                 ArrayList<String> allergyList = new ArrayList<>();
-
-                while (event_type != XmlPullParser.END_DOCUMENT) {
+                int i = 0;
+                while (event_type != XmlPullParser.END_DOCUMENT && i==0) {
                     if (event_type == XmlPullParser.START_TAG) {
                         tag = xpp.getName();
                     } else if (event_type == XmlPullParser.TEXT) {
@@ -249,14 +249,15 @@ public class MainActivity extends Activity {
                             //System.out.println(rawMaterial);
                             materialList.add(rawMaterial);
                             allergyList.add(allergy);
+                            i++;
                         }
                         //item별로 분리
                     }
                     event_type = xpp.next();
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
             return rawMaterial;
         }
@@ -267,7 +268,7 @@ public class MainActivity extends Activity {
             String[] allergyListSplited = allergy.split("\\,|\\s");
 
             final List<String> rawMaterialSplitedArray = new ArrayList<>();
-            List<String> allergyListSplitedArray = new ArrayList<>();
+            final List<String> allergyListSplitedArray = new ArrayList<>();
             for(int i = 0; i < rawMaterialSplited.length; i++){
                 rawMaterialSplitedArray.add(rawMaterialSplited[i]);
             }
@@ -310,7 +311,7 @@ public class MainActivity extends Activity {
                 No_Additives_Name[i] = temp;
                 final int i_num = i;
 
-                    mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
+                mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists() && (dataSnapshot.getKey() != "additives")) {
@@ -329,10 +330,14 @@ public class MainActivity extends Activity {
                                 Additives_Name[0] = "없음";
                                 Additives_EWG[0] = "없음";
                             }
+                            int allergy_num_intent = allergyListSplitedArray.size();
+                            String str = Integer.toString(allergyListSplitedArray.size());
+                            Log.e("알러지개수임ㅇㅇㅇㅇ",str);
                             intent_PDInfo.putExtra("성분EWG", Additives_EWG);
                             intent_PDInfo.putExtra("성분Name", Additives_Name);
                             intent_PDInfo.putExtra("성분Num", Additives_Num);
                             intent_PDInfo.putExtra("No성분Name", No_Additives_Name);
+                            intent_PDInfo.putExtra("알러지개수",allergy_num_intent);
                             //intent_PDInfo.putExtra("No성분Num", No_Additives_Num);
                             Log.d("성분EWG", Additives_EWG.toString());
                             startActivity(intent_PDInfo);
@@ -360,11 +365,6 @@ public class MainActivity extends Activity {
             intent_PDInfo.putExtra("성분",Intent_rawMaterialSplitedArray);
             intent_PDInfo.putExtra("알러지",Intent_allergyListSplitedArray);
 
-
-
-
-
-            //startActivity(intent_PDInfo);
 
         }
     }
