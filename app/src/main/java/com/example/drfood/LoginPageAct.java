@@ -148,7 +148,8 @@ public class LoginPageAct extends AppCompatActivity {
                             intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
                             intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
-
+                            // 여기 처음에 어플 깔고 로그인하면 어플 꺼짐. 다시 실행하면 될꺼임....
+                            //꺼지는 문제는 곧 해결할꺼임
                             //사용자가 DB에 있는 사용자인지 없는 사용자읹지 알기위해
                             mDatabase.child("people").child(UserUid).addValueEventListener(new ValueEventListener() {
                                 @Override
