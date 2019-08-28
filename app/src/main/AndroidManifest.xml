@@ -41,6 +41,13 @@
             android:theme="@style/AppTheme"
             android:configChanges="screenSize|orientation">
         </activity>
+        <activity android:name=".Person_Information"
+            android:configChanges="screenSize|orientation">
+        </activity>
+        <!-- 팝업 Activity -->
+        <activity android:name=".AllegyPopup" android:theme="@android:style/Theme.Dialog" />
+
+
     </application>
 
 </manifest>

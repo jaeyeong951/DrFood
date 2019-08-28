@@ -158,66 +158,38 @@
         android:text="년생"
         android:layout_marginTop="20dp"/>
 
-    <TextView
-        android:id="@+id/text_tall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+
+
+    <LinearLayout
+        android:id="@+id/button팝업"
+        android:paddingBottom="8dp"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_below="@+id/text_age"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="신장"
-        android:textSize="18dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="팝업"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="mOnPopupClick"/>
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/person_tall"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_toRightOf="@+id/text_tall"
-        android:layout_below="@+id/person_age"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="20dp"
-        />
+    <LinearLayout
+        android:paddingBottom="8dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/button팝업"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_cm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/person_tall"
-        android:layout_below="@+id/person_age"
-        android:text="cm"
-        android:layout_marginTop="20dp"/>
 
-    <TextView
-        android:id="@+id/text_weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_age"
-        android:layout_toRightOf="@+id/text_cm"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="몸무게"
-        android:textSize="18dp" />
-
-    <EditText
-        android:id="@+id/person_weight"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_toRightOf="@+id/text_weight"
-        android:layout_below="@+id/person_age"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="10dp"
-        />
-
-    <TextView
-        android:id="@+id/text_kg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/person_weight"
-        android:layout_below="@+id/person_age"
-        android:text="kg"
-        android:layout_marginTop="20dp"/>
 
 
 </RelativeLayout>
