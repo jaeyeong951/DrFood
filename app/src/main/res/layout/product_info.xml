@@ -291,6 +291,27 @@
             android:text="개"
             android:textSize="15sp" />
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_below="@+id/product_atopy_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="상세 알러지 유발 성분 리스트"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/product_allergy_list"
+            android:layout_below="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="현재 유발하는 알러지는 없습니다."
+            android:textColor="#99000000"
+            android:textSize="12sp" />
+
     </RelativeLayout>
 
 </RelativeLayout>

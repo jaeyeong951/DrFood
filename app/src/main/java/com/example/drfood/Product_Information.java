@@ -32,6 +32,7 @@ public class Product_Information extends AppCompatActivity {
     TextView harm_text;
     TextView allergy_text;
     int allergy_num;
+    TextView allergy_list;
 
     //Additive 관련 성분들도
     String Additive_EWG[] = new String[100];
@@ -59,6 +60,7 @@ public class Product_Information extends AppCompatActivity {
         care_text = findViewById(R.id.product_care_num);
         harm_text = findViewById(R.id.product_harm_num);
         allergy_text = findViewById(R.id.product_atopy_num);
+        allergy_list = findViewById(R.id.product_allergy_list);
 
         Intent intent = getIntent();
         product_image = intent.getStringExtra("이미지");
@@ -124,6 +126,7 @@ public class Product_Information extends AppCompatActivity {
 
 
         make_bar(Additive_EWG);
+
     }
 
     void make_bar(String[] additivie_EWG)
@@ -169,10 +172,17 @@ public class Product_Information extends AppCompatActivity {
             harm_text.setText(harm_num_str);
 
             String allergy_text_num = Integer.toString(allergy_num);
-
             allergy_text.setText(allergy_text_num);
+        String allergy_list_add = "";
+            for(int i = 0; i < allergyListSplitedArray.length; i++) {
+                if(allergyListSplitedArray[i] == null)
+                {
+                    break;
+                }
+                allergy_list_add = allergy_list_add + allergyListSplitedArray[i] + " ";
 
-
+            }
+            allergy_list.setText(allergy_list_add);
     }
 
 }
