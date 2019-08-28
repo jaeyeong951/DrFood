@@ -29,6 +29,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class LoginPageAct extends AppCompatActivity {
 
@@ -36,15 +39,21 @@ public class LoginPageAct extends AppCompatActivity {
     private static final int RC_SIGN_IN = 10;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-    private Boolean UserExgist;
     private String UserUid;
     private String UserName;
     private String UserEmail;
+    private int Allegy_Exgist_Num;
+    private String Trans_Allegy_Exgist_index;
+
+    String Temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        //초기화
+        Allegy_Exgist_Num = 0;
+        Trans_Allegy_Exgist_index = "9999_";
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -125,53 +134,63 @@ public class LoginPageAct extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Success", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             UserUid = user.getUid();
                             UserName = user.getDisplayName();
                             UserEmail = user.getEmail();
-                            UserExgist = false;
                             Log.d("UserUid", UserUid);
                             Log.d("UserName",UserName);
                             Log.d("UserEmail", UserEmail);
+                            final Intent intent = new Intent();
+                            intent.putExtra("UserUid",UserUid);
+                            intent.putExtra("UserName", UserName);
+                            intent.putExtra("UserEmail",UserEmail);
+                            intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
+                            intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
 
                             //사용자가 DB에 있는 사용자인지 없는 사용자읹지 알기위해
-                            ChildEventListener childEventListener = new ChildEventListener() {
+                            mDatabase.child("people").child(UserUid).addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    Log.d("여기까지","됬나?");
-                                    if(dataSnapshot.getKey().equals(UserUid)){
-                                        UserExgist = true;
-                                        Log.d("여기까지","됬나?");
-                                        //추후에 하자
-                                    }
-                                }
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                   if(!dataSnapshot.child("name").exists()) {
+                                       Log.d("여기까지","됬나?");
+                                       /*mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
+                                       mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
+                                       mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
+                                       mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");*/
+                                       Create();
 
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                                }
+                                       setResult(3000,intent);
+                                       finish();
+                                   }else{
+                                       Trans_Allegy_Exgist_index = dataSnapshot.child("알러지 번호").getValue().toString();
+                                       Temp = dataSnapshot.child("알러지 개수").getValue().toString();
+                                       Allegy_Exgist_Num = Integer.parseInt(Temp);
 
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                                       intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
+                                       intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                                       setResult(3000,intent);
+                                       finish();
+                                   }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                 }
-                            };
-                            mDatabase.child("people").addChildEventListener(childEventListener);
-
+                            });
+/*
                             if(!UserExgist){
                                 Log.d("여기까지","됬나?");
                                 mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
                                 mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
+                                mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
+                                mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
+                                Allegy_Exgist_Num = 0;
+                                Trans_Allegy_Exgist_index = "9999_";
                                 //mDatabase.child("people").child(UserUid).child()
                             }
 
@@ -180,9 +199,11 @@ public class LoginPageAct extends AppCompatActivity {
                             intent.putExtra("UserUid",UserUid);
                             intent.putExtra("UserName", UserName);
                             intent.putExtra("UserEmail",UserEmail);
+                            intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
+                            intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
                             setResult(3000,intent);
-                            finish();
+                            finish();*/
                         } else {
                             Log.d("맞나", "제발4");
                             // If sign in fails, display a message to the user.
@@ -205,4 +226,11 @@ public class LoginPageAct extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     // [END signin]
+
+    private void Create(){
+        mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
+        mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
+        mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
+        mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
+    }
 }

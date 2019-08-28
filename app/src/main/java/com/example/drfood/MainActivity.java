@@ -68,15 +68,28 @@ public class MainActivity extends Activity {
     private String UserUid;
     private String UserEmail;
     private String UserName;
+    private ArrayList<String> Allegy_Types;
+    private int Allegy_Exgist_Num;
+    private ArrayList<Integer> Allegy_Exgist_index;
+    private String Trans_Allegy_Exgist_index;
 
 
     Intent intent_PDInfo;
     Intent  User_Information;
 
+    int Temp1;
+    int Temp2;
+    String Temp3;
+    String Temp4;
+    int Count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //초기화
+        Allegy_Exgist_index = new ArrayList<Integer>();
+        Allegy_Exgist_index.clear();
 
         intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
         //데이터 베이스 주소 가져오기
@@ -124,10 +137,26 @@ public class MainActivity extends Activity {
                 User_Information.putExtra("UserUid", UserUid);
                 User_Information.putExtra("UserName", UserName);
                 User_Information.putExtra("UserEmail", UserEmail);
-                //User_Information.putExtra("UserUid", UserUid);
-                startActivity(User_Information);
+                User_Information.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
+                User_Information.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
+                User_Information.putExtra("Trans_Allegy_Exgist_index",Trans_Allegy_Exgist_index);
+
+                startActivityForResult(User_Information,3100);
             }
         });
+
+        //알러지 유발하는 것들 배열안에 넣습니다.
+        Allegy_Types = new ArrayList<String>();
+        Allegy_Types.clear();
+        Allegy_Types.add("게");        Allegy_Types.add("새우");        Allegy_Types.add("땅콩");        Allegy_Types.add("호두");
+        Allegy_Types.add("대두");        Allegy_Types.add("밀");        Allegy_Types.add("메밀");        Allegy_Types.add("우유");
+        Allegy_Types.add("난류");        Allegy_Types.add("생선류");        Allegy_Types.add("오징어");        Allegy_Types.add("조개");
+        Allegy_Types.add("닭도리");        Allegy_Types.add("돼지고기");        Allegy_Types.add("쇠고기");        Allegy_Types.add("딸기");
+        Allegy_Types.add("망고");        Allegy_Types.add("멜론");        Allegy_Types.add("바나나");        Allegy_Types.add("사과");
+        Allegy_Types.add("살구");        Allegy_Types.add("오렌지");        Allegy_Types.add("자두");        Allegy_Types.add("참외");
+        Allegy_Types.add("체리");        Allegy_Types.add("키위");        Allegy_Types.add("복숭아");        Allegy_Types.add("토마토");
+        Allegy_Types.add("계피");        Allegy_Types.add("마늘");        Allegy_Types.add("버섯");        Allegy_Types.add("당근");
+        Allegy_Types.add("오이");        Allegy_Types.add("쌀");        Allegy_Types.add("번데기");
 
     }
 
@@ -189,10 +218,37 @@ public class MainActivity extends Activity {
             UserUid = data.getStringExtra("UserUid");
             UserName = data.getStringExtra("UserName");
             UserEmail = data.getStringExtra("UserEmail");
+            Trans_Allegy_Exgist_index = data.getStringExtra("Trans_Allegy_Exgist_index");
+            Allegy_Exgist_Num = data.getIntExtra("Allegy_Exgist_Num", 0);
+
+            Temp1 =0;
+            Temp2 = 0;
+            Temp4 = Trans_Allegy_Exgist_index;
+            Count = 0;
+            while(Count !=Allegy_Exgist_Num){
+                Temp2 = Temp4.indexOf("_");
+                Temp3 = Temp4.substring(Temp1, Temp2);
+                Temp4 = Temp4.replace( Temp3+"_", "");
+
+                Allegy_Exgist_index.add(Integer.parseInt(Temp3));
+                Log.d("Temp4", Temp4);
+                Log.d("Temp", Temp3);
+                Count++;
+
+            }
+
             Log.d("UserUid_Main", UserUid);
             Log.d("UserName_Main",UserName);
             Log.d("UserEmail_Main", UserEmail);
 
+        }
+        else if(requestCode == 3100){
+            Trans_Allegy_Exgist_index = data.getStringExtra("Trans_Allegy_Exgist_index");
+            Allegy_Exgist_Num = data.getIntExtra("Allegy_Exgist_Num", 0);
+            Allegy_Exgist_index = data.getIntegerArrayListExtra("Allegy_Exgist_index");
+            Log.d("Trans다다다", Trans_Allegy_Exgist_index);
+            Log.d("Trans다다다", Allegy_Exgist_Num +"");
+            Log.d("Trans다다다", Allegy_Exgist_index.get(0)+ "");
         }
 
 
@@ -376,6 +432,9 @@ public class MainActivity extends Activity {
             intent_PDInfo.putExtra("이름",Snack_Name);
             intent_PDInfo.putExtra("성분",Intent_rawMaterialSplitedArray);
             intent_PDInfo.putExtra("알러지",Intent_allergyListSplitedArray);
+            intent_PDInfo.putExtra("Allegy_Types",Allegy_Types);
+            intent_PDInfo.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
+            intent_PDInfo.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
 
 
 
