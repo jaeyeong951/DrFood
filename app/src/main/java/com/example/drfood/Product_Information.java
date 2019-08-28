@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class Product_Information extends AppCompatActivity {
 
     String rawMaterialSplitedArray[] = new String[100];
     String allergyListSplitedArray[] = new String[10];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

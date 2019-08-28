@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -86,7 +87,6 @@ public class MainActivity extends Activity {
         Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
 
 
-
         startActivityForResult(Go_Login_Page, 3000);
 
         //3000은 로그인
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 //
 //        StrictMode.setThreadPolicy(policy);
         //사용자 화면으로 넘어가는 intent
-        //User_Information = new Intent(MainActivity.this, Person_Information.class);
+        User_Information = new Intent(MainActivity.this, Person_Information.class);
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
         Button = findViewById(R.id.chips_button);
@@ -164,13 +164,17 @@ public class MainActivity extends Activity {
 
                         //데이터베이스 안에 존재하면 true 없으면 false
                         Exgist_Result = true;
+                        if(dataSnapshot.getValue() != null && dataSnapshot.getValue() != "") {
+                            Snack_Name = dataSnapshot.getValue().toString();
+                            Log.d("Snack name : ", Snack_Name);
 
-                        Snack_Name = dataSnapshot.getValue().toString();
-                        Log.d("Snack name : ", Snack_Name);
-
-                        pharm = new materialParser();
-                        pharm.execute();
-
+                            pharm = new materialParser();
+                            pharm.execute();
+                        }
+                        else{
+                            Intent popup_intent = new Intent(MainActivity.this, no_db_popup_activity.class);
+                            startActivityForResult(popup_intent, 1);
+                        }
                     }
                 }
 
@@ -218,8 +222,9 @@ public class MainActivity extends Activity {
 
                 ArrayList<String> materialList = new ArrayList<>();
                 ArrayList<String> allergyList = new ArrayList<>();
+
+                while (event_type != XmlPullParser.END_DOCUMENT) {
                 int i = 0;
-                while (event_type != XmlPullParser.END_DOCUMENT && i==0) {
                     if (event_type == XmlPullParser.START_TAG) {
                         tag = xpp.getName();
                     } else if (event_type == XmlPullParser.TEXT) {
@@ -254,18 +259,24 @@ public class MainActivity extends Activity {
                         //item별로 분리
                     }
                     event_type = xpp.next();
-                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             }
             return rawMaterial;
         }
 
         @Override
         protected void onPostExecute(String material){
-            String[] rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,");
-            String[] allergyListSplited = allergy.split("\\,|\\s");
+            String[] rawMaterialSplited = new String[8];
+            String[] allergyListSplited = new String[8];
+            if(rawMaterial != null && rawMaterial != "") {
+                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,");
+            }
+            if(allergy != null && rawMaterial != "") {
+                allergyListSplited = allergy.split("\\,|\\s|\\(|\\)");
+            }
 
             final List<String> rawMaterialSplitedArray = new ArrayList<>();
             final List<String> allergyListSplitedArray = new ArrayList<>();
@@ -295,7 +306,8 @@ public class MainActivity extends Activity {
             final int Where_Exgist_i[] = new int[100];
 
             while(rawIt.hasNext()){
-                if(rawIt.next().contains("산")){
+                String test = rawIt.next();
+                if(test.contains("산") || test.contains("%")){
                     rawIt.remove();
                 }
             }
@@ -305,7 +317,7 @@ public class MainActivity extends Activity {
                 }
             }
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
-                Log.e("재려전부다" + i,rawMaterialSplitedArray.get(i));
+                Log.e("재려전부다",rawMaterialSplitedArray.get(i));
                 final String temp = rawMaterialSplitedArray.get(i);
                 Intent_rawMaterialSplitedArray[i] = rawMaterialSplitedArray.get(i);
                 No_Additives_Name[i] = temp;
@@ -365,6 +377,11 @@ public class MainActivity extends Activity {
             intent_PDInfo.putExtra("성분",Intent_rawMaterialSplitedArray);
             intent_PDInfo.putExtra("알러지",Intent_allergyListSplitedArray);
 
+
+
+
+
+            //startActivity(intent_PDInfo);
 
         }
     }
