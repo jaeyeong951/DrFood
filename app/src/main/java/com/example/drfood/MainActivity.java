@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
     String Intent_allergyListSplitedArray[] = new String[10];
 
     Intent intent_PDInfo;
+    Intent  User_Information;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class MainActivity extends Activity {
         Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
 
 
+
         startActivityForResult(Go_Login_Page, 3000);
 
         //3000은 로그인
@@ -89,7 +91,8 @@ public class MainActivity extends Activity {
 //        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //
 //        StrictMode.setThreadPolicy(policy);
-
+        //사용자 화면으로 넘어가는 intent
+        User_Information = new Intent(MainActivity.this, Person_Information.class);
 
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
         Button = findViewById(R.id.chips_button);
@@ -284,7 +287,7 @@ public class MainActivity extends Activity {
                 }
             }
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
-                Log.e("재려전부다",rawMaterialSplitedArray.get(i));
+                Log.e("재려전부다" + i,rawMaterialSplitedArray.get(i));
                 final String temp = rawMaterialSplitedArray.get(i);
                 Intent_rawMaterialSplitedArray[i] = rawMaterialSplitedArray.get(i);
                 No_Additives_Name[i] = temp;
@@ -305,6 +308,10 @@ public class MainActivity extends Activity {
                             No_Additives_Num++;
                         }*/
                         if(i_num + 1 == rawMaterialSplitedArray.size() ){
+                            if(Additives_Num == 0){
+                                Additives_Name[0] = "없음";
+                                Additives_EWG[0] = "없음";
+                            }
                             intent_PDInfo.putExtra("성분EWG", Additives_EWG);
                             intent_PDInfo.putExtra("성분Name", Additives_Name);
                             intent_PDInfo.putExtra("성분Num", Additives_Num);
