@@ -28,6 +28,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:18.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //프로필 사진을 위한 implementation
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
 
     //구글 데이터 베이스 필요

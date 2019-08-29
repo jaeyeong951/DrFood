@@ -380,7 +380,7 @@ public class MainActivity extends Activity {
             String[] rawMaterialSplited = new String[8];
             String[] allergyListSplited = new String[8];
             if(rawMaterial != null && rawMaterial != "") {
-                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s");
+                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s|\\;");
             }
             if(allergy != null && rawMaterial != "") {
                 allergyListSplited = allergy.split("\\,|\\s|\\(|\\)");

@@ -110,7 +110,7 @@ public class QRCodeScan extends Activity {
                     intent.putExtra("key", barcodeContents);
                     setResult(RESULT_OK, intent);
                     finish();
-                    Log.e("개병신시발",barcodeContents);
+                    Log.e("바코드인식",barcodeContents);
                 }
             }
         });

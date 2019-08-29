@@ -4,6 +4,7 @@
         android:color="@color/colorTouch"> <!-- ripple effect color -->
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
+            <corners android:radius="5dp" />
             <solid android:color="@color/colorTouch" /> <!-- background color -->
         </shape>
     </item>

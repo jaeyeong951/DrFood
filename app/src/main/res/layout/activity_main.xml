@@ -107,9 +107,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:gravity="center_horizontal"
-            android:text="Environmental Working Group 미국의  비영리 환경 활동그룹이며"
+            android:text="Environmental Working Group"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/text2"
             android:layout_width="329dp"
@@ -119,7 +120,19 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
             android:gravity="center_horizontal"
-            android:text="이 단체에서 식품의 성분과 안전성에 대한 데이터베이스를 제공한다 "
+            android:text="미국의 비영리 환경 시민단체로"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_horizontal"
+            android:text="식품의 성분과 안전성에 대한 객관적인 데이터베이스를 제공합니다"
             android:textColor="#000000"
             android:textSize="12sp" />
 
@@ -131,7 +144,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/text2">
+            android:layout_below="@+id/text3">
         </RelativeLayout>
 
         <ImageButton

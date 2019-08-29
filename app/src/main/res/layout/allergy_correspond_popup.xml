@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/title"
             android:text="알림!"
             android:textSize="20sp"
             android:textColor="#fff"
@@ -35,7 +36,7 @@
             android:layout_marginBottom="3dp"
             android:alpha="0.87"
             android:gravity="center"
-            android:text="해당 제품에 대한 정보는 아직 준비중입니다!"
+            android:text="알러지 존재"
             android:textColor="#000"
             android:textSize="14sp" />
     </LinearLayout>

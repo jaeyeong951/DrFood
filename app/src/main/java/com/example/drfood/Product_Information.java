@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Product_Information extends AppCompatActivity {
     String product_name;
@@ -42,6 +43,12 @@ public class Product_Information extends AppCompatActivity {
     String Additive_EWG[] = new String[100];
     String Additive_Name[] = new String[100];
     String No_Additive_Name[] = new String[100];
+    private ArrayList<String> Allegy_Types;
+    private int Allegy_Exgist_Num;
+    private ArrayList<Integer> Allegy_Exgist_index;
+    private ArrayList<String> Allergy_user_have;
+    private ArrayList<String> Allergy_correspond;
+    int Allergy_Exgist_Num;
     int No_Additive_Num;
     String rawMaterialSplitedArray[] = new String[100];
     String allergyListSplitedArray[] = new String[10];
@@ -95,13 +102,39 @@ public class Product_Information extends AppCompatActivity {
 
         allergy_num = intent.getExtras().getInt("알러지개수");
         No_Additives_Num = intent.getExtras().getInt("No_Additives_Num");
+        Allegy_Types = intent.getExtras().getStringArrayList("Allegy_Types");
+        Allegy_Exgist_index = intent.getExtras().getIntegerArrayList("Allegy_Exgist_index");
+        Allergy_Exgist_Num = intent.getExtras().getInt("Allegy_Exgist_Num");
         //isContained = intent.getExtras().getInt("isContained");
 
 
 //        for(int i = 0; i < 15; i++){
 //            Log.d("성분"+ i, rawMaterialSplitedArray[i]);
 //        }
-
+        Log.e("유저 알러지 숫자",Integer.toString(Allergy_Exgist_Num));
+        Allergy_user_have = new ArrayList<>();
+        Allergy_correspond = new ArrayList<>();
+        for(int i = 0; i < Allergy_Exgist_Num; i++){
+            Allergy_user_have.add(Allegy_Types.get(Allegy_Exgist_index.get(i)));
+            Log.e("유저 알러지",Allergy_user_have.get(i));
+        }
+        int correspond_num = 0;
+        for(int i = 0; i < allergy_num; i++){
+            for(int j = 0; j < Allergy_Exgist_Num; j++){
+                if(allergyListSplitedArray[i].equals(Allergy_user_have.get(j))){
+                    Allergy_correspond.add(Allergy_user_have.get(j));
+                    Log.e("알러지1",allergyListSplitedArray[i]);
+                    Log.e("알러지2",Allergy_user_have.get(j));
+                    correspond_num++;
+                }
+            }
+        }
+        if(Allergy_correspond.size() != 0){
+            Intent popup_intent = new Intent(Product_Information.this, allergy_corrspond_popup.class);
+            popup_intent.putExtra("일치알러지갯수",correspond_num);
+            popup_intent.putExtra("일치알러지",Allergy_correspond);
+            startActivityForResult(popup_intent, 1);
+        }
         Log.d("성분EWG", Additive_EWG[0]);
         Log.d("성분Name", Additive_Name[0]);
         Log.d("성분Num", "" + Additive_Num);
