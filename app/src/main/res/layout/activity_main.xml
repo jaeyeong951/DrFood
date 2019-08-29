@@ -32,12 +32,12 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_below="@+id/search_ex"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:background="#00000000"
         android:scaleType="fitCenter"
-        android:src="@drawable/ewg_12_round" />
+        android:src="@drawable/chip_round" />
 
     <ImageButton
         android:id="@+id/can_button"
@@ -49,7 +49,7 @@
         android:adjustViewBounds="true"
         android:background="#00000000"
         android:scaleType="fitCenter"
-        android:src="@drawable/ewg_36_round" />
+        android:src="@drawable/can_round" />
 
     <ImageButton
         android:id="@+id/icecream_button"
@@ -58,11 +58,11 @@
         android:layout_below="@+id/search_ex"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="40dp"
         android:adjustViewBounds="true"
         android:background="#00000000"
         android:scaleType="fitCenter"
-        android:src="@drawable/ewg_710_round" />
+        android:src="@drawable/icecream_round" />
 
     <RelativeLayout
         android:layout_width="402dp"
@@ -73,6 +73,126 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/drop_shadow">
 
+        <RelativeLayout
+            android:id="@+id/edge"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#1B000000"
+            android:layout_marginTop="40dp">
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ewg란"
+            android:layout_marginTop="20dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/drop_shadow1"
+            android:gravity="center_vertical|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EWG 등급이란?"
+                android:textSize="18sp"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ewg란"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_horizontal"
+            android:text="Environmental Working Group 미국의  비영리 환경 활동그룹이며"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_horizontal"
+            android:text="이 단체에서 식품의 성분과 안전성에 대한 데이터베이스를 제공한다 "
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:id="@+id/edge2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#1B000000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/text2">
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/ewg13"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/edge2"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ewg_12_round" />
+        <ImageButton
+            android:id="@+id/ewg47"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/edge2"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ewg_36_round" />
+        <ImageButton
+            android:id="@+id/ewg710"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/edge2"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ewg_710_round" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ewg13"
+            android:layout_marginLeft="62dp"
+            android:textSize="11dp"
+            android:text="낮은 위험도"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ewg13"
+            android:layout_marginLeft="62dp"
+            android:textSize="11dp"
+            android:layout_centerHorizontal="true"
+            android:text="보통 위험도"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ewg13"
+            android:layout_marginEnd="62dp"
+            android:layout_alignParentRight="true"
+            android:textSize="11dp"
+            android:text="높음 위험도"/>
 
     </RelativeLayout>
 
