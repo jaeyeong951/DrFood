@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:id="@+id/topPanel_1"
         android:layout_width="match_parent"
@@ -250,6 +251,13 @@
             android:layout_marginRight="60dp"
             android:text="개"
             android:textSize="15sp" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_goto"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"/>
     </RelativeLayout>
 
     <RelativeLayout

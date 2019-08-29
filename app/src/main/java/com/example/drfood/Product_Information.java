@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -35,6 +36,7 @@ public class Product_Information extends AppCompatActivity {
     TextView allergy_text;
     TextView allergy_list;
     RelativeLayout go_to_compose;
+    ImageButton backbutton;
 
     //Additive 관련 성분들도
     String Additive_EWG[] = new String[100];
@@ -68,6 +70,13 @@ public class Product_Information extends AppCompatActivity {
         allergy_text = findViewById(R.id.product_atopy_num);
         allergy_list = findViewById(R.id.product_allergy_list);
         go_to_compose = findViewById(R.id.product_compose_layout);
+        backbutton = findViewById(R.id.back_button);
+        backbutton.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         product_image = intent.getStringExtra("이미지");
