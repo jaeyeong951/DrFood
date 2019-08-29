@@ -28,6 +28,7 @@ public class Product_Information extends AppCompatActivity {
     LinearLayout safe_bar;
     LinearLayout care_bar;
     LinearLayout harm_bar;
+    LinearLayout none_bar;
     TextView safe_text;
     TextView care_text;
     TextView harm_text;
@@ -47,6 +48,7 @@ public class Product_Information extends AppCompatActivity {
     int safe_num = 0;
     int care_num = 0;
     int harm_num = 0;
+    int none_num = 0;
     //int isContained = 0;
 
     @Override
@@ -59,6 +61,7 @@ public class Product_Information extends AppCompatActivity {
         safe_bar = findViewById(R.id.safe_bar_xml);
         care_bar = findViewById(R.id.care_bar_xml);
         harm_bar = findViewById(R.id.harm_bar_xml);
+        none_bar = findViewById(R.id.none_bar_xml);
         safe_text = findViewById(R.id.product_safe_num);
         care_text = findViewById(R.id.product_care_num);
         harm_text = findViewById(R.id.product_harm_num);
@@ -137,6 +140,7 @@ public class Product_Information extends AppCompatActivity {
                 intent2.putExtra("안전num",safe_num);
                 intent2.putExtra("주의num",care_num);
                 intent2.putExtra("위험num",harm_num);
+                intent2.putExtra("Nonenum",none_num);
 
                 intent2.putExtra("첨가물ewg",Additive_EWG);
                 intent2.putExtra("첨가물이름",Additive_Name);
@@ -167,7 +171,10 @@ public class Product_Information extends AppCompatActivity {
             {
                 harm_num = harm_num + 1;
             }
-
+            else if(additivie_EWG[i].equals("NONE") || additivie_EWG[i].equals("none"))
+            {
+                none_num = none_num + 1;
+            }
         }
             LinearLayout.LayoutParams lay = (LinearLayout.LayoutParams) safe_bar.getLayoutParams();
             lay.weight = safe_num;
@@ -175,6 +182,8 @@ public class Product_Information extends AppCompatActivity {
             lay1.weight = care_num;
             LinearLayout.LayoutParams lay2 = (LinearLayout.LayoutParams) harm_bar.getLayoutParams();
             lay2.weight = harm_num;
+            LinearLayout.LayoutParams lay3 = (LinearLayout.LayoutParams) none_bar.getLayoutParams();
+            lay3.weight = none_num;
 
             String safe_num_str = Integer.toString(safe_num);
             String care_num_str = Integer.toString(care_num);

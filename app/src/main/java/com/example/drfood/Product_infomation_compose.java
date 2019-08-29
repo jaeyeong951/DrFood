@@ -19,6 +19,7 @@ public class Product_infomation_compose extends AppCompatActivity {
     LinearLayout safe_bar;
     LinearLayout care_bar;
     LinearLayout harm_bar;
+    LinearLayout none_bar;
     TextView safe_text;
     TextView care_text;
     TextView harm_text;
@@ -26,6 +27,7 @@ public class Product_infomation_compose extends AppCompatActivity {
     int safe_num = 0;
     int care_num = 0;
     int harm_num = 0;
+    int none_num = 0;
 
     String Additive_EWG[] = new String[100];
     String Additive_Name[] = new String[100];
@@ -44,6 +46,7 @@ public class Product_infomation_compose extends AppCompatActivity {
         safe_bar = findViewById(R.id.safe_bar_xml);
         care_bar = findViewById(R.id.care_bar_xml);
         harm_bar = findViewById(R.id.harm_bar_xml);
+        none_bar = findViewById(R.id.none_bar_xml);
         safe_text = findViewById(R.id.product_safe_num);
         care_text = findViewById(R.id.product_care_num);
         harm_text = findViewById(R.id.product_harm_num);
@@ -54,6 +57,7 @@ public class Product_infomation_compose extends AppCompatActivity {
         safe_num = intent.getExtras().getInt("안전num");
         care_num = intent.getExtras().getInt("주의num");
         harm_num = intent.getExtras().getInt("위험num");
+        none_num = intent.getExtras().getInt("Nonenum");
         Additive_EWG = intent.getExtras().getStringArray("첨가물ewg");
         Additive_Name = intent.getExtras().getStringArray("첨가물이름");
         No_Additive_Name = intent.getExtras().getStringArray("no첨가물");
@@ -64,6 +68,8 @@ public class Product_infomation_compose extends AppCompatActivity {
         lay1.weight = care_num;
         LinearLayout.LayoutParams lay2 = (LinearLayout.LayoutParams) harm_bar.getLayoutParams();
         lay2.weight = harm_num;
+        LinearLayout.LayoutParams lay3 = (LinearLayout.LayoutParams) none_bar.getLayoutParams();
+        lay3.weight = none_num;
 
         String safe_num_str = Integer.toString(safe_num);
         String care_num_str = Integer.toString(care_num);

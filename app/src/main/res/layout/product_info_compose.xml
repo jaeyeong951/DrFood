@@ -85,6 +85,14 @@
                 android:background="#F3FF2020"
                 android:orientation="horizontal">
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/none_bar_xml"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#CD3F3F3F"
+                android:orientation="horizontal">
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
