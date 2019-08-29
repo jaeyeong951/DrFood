@@ -81,6 +81,7 @@
             android:layout_toRightOf = "@+id/기본정보"
             android:text="수정하기->"
             android:textColor="#555252"
+            android:onClick="mOnPopupClick2"
             />
     </RelativeLayout>
 
@@ -129,7 +130,7 @@
             android:text="나이"
             android:layout_marginLeft="20dp"
             />
-        <TextView
+        <!--<TextView
             android:id="@+id/지역"
             android:background="@drawable/rounded"
             android:layout_width="wrap_content"
@@ -139,7 +140,7 @@
             android:layout_toRightOf="@+id/나이"
             android:text="지역"
             android:layout_marginLeft="20dp"
-            />
+            />-->
 
     </RelativeLayout>
 
@@ -173,73 +174,6 @@
             android:textColor="#555252"
             android:onClick="mOnPopupClick"/>
     </RelativeLayout>
-
-    <!--<TextView
-        android:id="@+id/text_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/abcdef"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="성별"
-        android:textSize="18dp" />
-    
-    <RadioGroup
-        android:id="@+id/rg_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@+id/text_sex"
-        android:layout_below="@+id/abcdef"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="20dp"
-        >
-        <RadioButton
-            android:layout_weight="1"
-            android:text="남성"
-            android:id="@+id/rg_btn1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            />
-
-        <RadioButton
-            android:layout_weight="1"
-            android:text="여성"
-            android:id="@+id/rg_btn2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/text_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_sex"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="연령"
-        android:textSize="18dp" />
-    
-    <EditText
-        android:id="@+id/person_age"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_toRightOf="@+id/text_age"
-        android:layout_below="@+id/rg_sex"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/person_age"
-        android:layout_below="@+id/rg_sex"
-        android:text="년생"
-        android:layout_marginTop="20dp"/>-->
-
 
 
     <LinearLayout

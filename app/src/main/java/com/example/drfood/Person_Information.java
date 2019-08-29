@@ -181,6 +181,10 @@ public class Person_Information extends Activity {
 
     }
 
+    //버튼
+    public void mOnPopupClick2(View v){
+
+    }
 
     //버튼
     public void mOnPopupClick(View v){
