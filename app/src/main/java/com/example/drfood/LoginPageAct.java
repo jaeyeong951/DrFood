@@ -186,28 +186,7 @@ public class LoginPageAct extends AppCompatActivity {
 
                                 }
                             });
-/*
-                            if(!UserExgist){
-                                Log.d("여기까지","됬나?");
-                                mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
-                                mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
-                                mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
-                                mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
-                                Allegy_Exgist_Num = 0;
-                                Trans_Allegy_Exgist_index = "9999_";
-                                //mDatabase.child("people").child(UserUid).child()
-                            }
 
-                            //updateUI(user);
-                            Intent intent = new Intent();
-                            intent.putExtra("UserUid",UserUid);
-                            intent.putExtra("UserName", UserName);
-                            intent.putExtra("UserEmail",UserEmail);
-                            intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
-                            intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
-
-                            setResult(3000,intent);
-                            finish();*/
                         } else {
                             Log.d("맞나", "제발4");
                             // If sign in fails, display a message to the user.
@@ -230,11 +209,7 @@ public class LoginPageAct extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     // [END signin]
-/*
-    private void Create(){
-        mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
-        mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
-        mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
-        mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
-    }*/
+    public void onBackPressed(){
+        finishAffinity();
+    }
 }

@@ -52,6 +52,7 @@ public class Person_Information extends Activity {
 
         Main_Back = new Intent();
 
+
         Intent Got_Data = getIntent();
         UserUid = Got_Data.getStringExtra("UserUid");
         UserEmail = Got_Data.getStringExtra("UserEmail");
@@ -59,6 +60,10 @@ public class Person_Information extends Activity {
         Allegy_Exgist_index = Got_Data.getIntegerArrayListExtra("Allegy_Exgist_index");
         Allegy_Exgist_Num = Got_Data.getIntExtra("Allegy_Exgist_Num",0);
         Trans_Allegy_Exgist_index = Got_Data.getStringExtra("Trans_Allegy_Exgist_index");
+
+        Main_Back.putExtra("Allegy_Exgist_index",Allegy_Exgist_index);
+        Main_Back.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
+        Main_Back.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
 
         //데이터베이스가져오기
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -92,6 +97,7 @@ public class Person_Information extends Activity {
             }
         });
 
+
     }
 
 
@@ -100,6 +106,8 @@ public class Person_Information extends Activity {
         //데이터 담아서 팝업(액티비티) 호출
         Intent intent = new Intent(this, AllegyPopup.class);
         intent.putExtra("data", "Test Popup");
+        intent.putExtra("Allegy_Exgist_index",Allegy_Exgist_index);
+        intent.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
         startActivityForResult(intent, 1);
     }
 
@@ -120,7 +128,7 @@ public class Person_Information extends Activity {
                 if(Allegy_Exgist_Num != 0){
                     for(int i = 0; i < Allegy_Exgist_Num; i++){
                         Trans_Allegy_Exgist_index = Trans_Allegy_Exgist_index + Allegy_Exgist_index.get(i) + "_";
-                        //Log.d("TransAllegyExgistindex", Trans_Allegy_Exgist_index);
+                        Log.d("TransAllegyExgistindex", Trans_Allegy_Exgist_index);
                     }
                 }
 
@@ -129,5 +137,11 @@ public class Person_Information extends Activity {
         }
     }
 
+
+    @Override
+    public void onBackPressed(){
+        setResult(3100, Main_Back);
+        finish();
+    }
 
 }

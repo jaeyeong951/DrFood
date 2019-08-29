@@ -40,8 +40,8 @@ public class AllegyPopup extends Activity {
         Allegy_Exgist_index.clear();
         Allegy_Exgist_Num = 0;
         //밑에 데이터베이스에 있는 데이터를 넣기 만들기
-
-
+        Allegy_Exgist_index = getIntent().getIntegerArrayListExtra("Allegy_Exgist_index");
+        Allegy_Exgist_Num = getIntent().getIntExtra("Allegy_Exgist_Num", 0);
 
 
 
@@ -87,10 +87,12 @@ public class AllegyPopup extends Activity {
             Allegy_Exgist_CheckBox[j] = false;
         }
 
+
         for(int i = 0; i < Allegy_Exgist_Num; i++){
-            listview.setItemChecked(Allegy_Exgist_index.get(i), true);
+            listview.setItemChecked( Allegy_Exgist_index.get(i), true);
             Allegy_Exgist_CheckBox[Allegy_Exgist_index.get(i)] = true;
         }
+
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -123,6 +125,7 @@ public class AllegyPopup extends Activity {
     //확인 버튼 클릭
     public void mOnClose(View v){
         Allegy_Exgist_index.clear();
+        Allegy_Exgist_Num = 0;
         for(int i = 0; i < listview.getCount(); i++){
             if(Allegy_Exgist_CheckBox[i] == true){
                 Allegy_Exgist_index.add(i);
