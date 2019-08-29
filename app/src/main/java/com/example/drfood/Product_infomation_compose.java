@@ -3,6 +3,8 @@ package com.example.drfood;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -23,6 +25,7 @@ public class Product_infomation_compose extends AppCompatActivity {
     TextView safe_text;
     TextView care_text;
     TextView harm_text;
+    ImageButton backbutton;
 
     int safe_num = 0;
     int care_num = 0;
@@ -50,8 +53,14 @@ public class Product_infomation_compose extends AppCompatActivity {
         safe_text = findViewById(R.id.product_safe_num);
         care_text = findViewById(R.id.product_care_num);
         harm_text = findViewById(R.id.product_harm_num);
-
         listView = findViewById(R.id.arrayList);
+        backbutton = findViewById(R.id.back_button);
+        backbutton.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         safe_num = intent.getExtras().getInt("안전num");

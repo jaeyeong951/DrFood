@@ -65,8 +65,8 @@
         android:src="@drawable/ewg_710_round" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="402dp"
+        android:layout_height="322dp"
         android:layout_below="@+id/icecream_button"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="25dp"
