@@ -2,6 +2,7 @@ package com.example.drfood;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,10 @@ public class LoginPageAct extends AppCompatActivity {
     private int Allegy_Exgist_Num;
     private String Trans_Allegy_Exgist_index;
 
+    //자동 로그인을 위한 버튼
+    private SharedPreferences auto;
+    String login;
+
     String Temp;
 
     @Override
@@ -55,6 +60,11 @@ public class LoginPageAct extends AppCompatActivity {
         //초기화
         Allegy_Exgist_Num = 0;
         Trans_Allegy_Exgist_index = "9999_";
+
+        auto = getSharedPreferences("auto", LoginPageAct.MODE_PRIVATE);
+        login = auto.getString("inputId","0");
+
+
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,10 +76,19 @@ public class LoginPageAct extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(LoginPageAct.this, gso);
 
         SignInButton btn = (SignInButton)findViewById(R.id.sign_in_by_google_button);
+
+        if(login.equals("1")){
+            signIn();
+        }
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
+                SharedPreferences.Editor autoLogin = auto.edit();
+                autoLogin.putString("inputId", "1");
+
+                autoLogin.commit();
             }
         });
 
