@@ -37,7 +37,7 @@
     <RelativeLayout
         android:id="@+id/product_compose_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:layout_below="@+id/edge1">
 
         <TextView
@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"
-            android:text="성분 구성"
+            android:text="첨가물 구성"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,19 +60,31 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:background="#F3FF2020">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/safe_bar_xml"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#80FBFF">
+                android:background="#8BC34A"
+                android:orientation="horizontal">
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/care_bar_xml"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFEB3B"
+                android:orientation="horizontal">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/harm_bar_xml"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F3FF2020"
+                android:orientation="horizontal">
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -81,11 +93,11 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             android:layout_toRightOf="@id/textView4"
-            android:text="주의성분"
+            android:text="안전성분"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/product_care_num"
+            android:id="@+id/product_safe_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -111,11 +123,11 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="65dp"
             android:layout_toRightOf="@id/textView4"
-            android:text="위험성분"
+            android:text="주의성분"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/product_harm_num"
+            android:id="@+id/product_care_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -131,6 +143,36 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="65dp"
+            android:layout_marginRight="60dp"
+            android:text="개"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="90dp"
+            android:layout_toRightOf="@id/textView4"
+            android:text="위험성분"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/product_harm_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="82dp"
+            android:layout_marginRight="80dp"
+            android:text="0"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="90dp"
             android:layout_marginRight="60dp"
             android:text="개"
             android:textSize="15sp" />
@@ -150,17 +192,56 @@
     <RelativeLayout
         android:id="@+id/rating_table"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/edge2">
+        android:layout_height="30dp"
+        android:layout_below="@+id/edge2"
+        android:layout_marginTop="0dp"
+        android:background="#E4FDF3">
+    <TextView
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식품첨가물 목록"
+        android:textColor="#000000"/>
 
+        <TextView
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="등급"
+            android:textColor="#000000"/>
 
     </RelativeLayout>
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
+        android:id="@+id/arrayList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rating_table"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rating_table" />
+
+    <RelativeLayout
+        android:id="@+id/edge3"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/arrayList"
+        android:background="#E4FDF3">
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원재료 목록"
+            android:textColor="#000000"/>
+
+    </RelativeLayout>
+    <ListView
+    android:id="@+id/arrayList2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/edge3" />
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,26 +32,27 @@ public class Product_Information extends AppCompatActivity {
     TextView care_text;
     TextView harm_text;
     TextView allergy_text;
-    int allergy_num;
     TextView allergy_list;
+    RelativeLayout go_to_compose;
 
     //Additive 관련 성분들도
     String Additive_EWG[] = new String[100];
     String Additive_Name[] = new String[100];
-    int Additive_Num;
-
     String No_Additive_Name[] = new String[100];
     int No_Additive_Num;
-
     String rawMaterialSplitedArray[] = new String[100];
     String allergyListSplitedArray[] = new String[10];
-
+    int Additive_Num;
+    int allergy_num;
+    int safe_num = 0;
+    int care_num = 0;
+    int harm_num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.product_info);
+
         TextView pdName = findViewById(R.id.product_name);
         pdImage = findViewById(R.id.product_image);
         safe_bar = findViewById(R.id.safe_bar_xml);
@@ -61,6 +63,7 @@ public class Product_Information extends AppCompatActivity {
         harm_text = findViewById(R.id.product_harm_num);
         allergy_text = findViewById(R.id.product_atopy_num);
         allergy_list = findViewById(R.id.product_allergy_list);
+        go_to_compose = findViewById(R.id.product_compose_layout);
 
         Intent intent = getIntent();
         product_image = intent.getStringExtra("이미지");
@@ -126,22 +129,31 @@ public class Product_Information extends AppCompatActivity {
 
 
         make_bar(Additive_EWG);
+        go_to_compose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getApplicationContext(), Product_infomation_compose.class);
+                intent2.putExtra("안전num",safe_num);
+                intent2.putExtra("주의num",care_num);
+                intent2.putExtra("위험num",harm_num);
 
+                intent2.putExtra("첨가물ewg",Additive_EWG);
+                intent2.putExtra("첨가물이름",Additive_Name);
+                intent2.putExtra("no첨가물",No_Additive_Name);
+                startActivity(intent2);
+            }
+        });
     }
 
     void make_bar(String[] additivie_EWG)
     {
-        Log.d("성분EWG21431", additivie_EWG[0]);
-        int safe_num = 0;
-        int care_num = 0;
-        int harm_num = 0;
+
 
         for(int i = 0; i<additivie_EWG.length; i++)
         {
             if(additivie_EWG[i] == null){
                 break;
             }
-            Log.e("출력test", additivie_EWG[i]);
             if(additivie_EWG[i].equals("1")  || additivie_EWG[i].equals("2"))
             {
                 safe_num = safe_num + 1;
