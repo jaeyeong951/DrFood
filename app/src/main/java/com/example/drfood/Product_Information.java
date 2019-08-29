@@ -47,6 +47,7 @@ public class Product_Information extends AppCompatActivity {
     int safe_num = 0;
     int care_num = 0;
     int harm_num = 0;
+    //int isContained = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +81,8 @@ public class Product_Information extends AppCompatActivity {
         allergyListSplitedArray = intent.getExtras().getStringArray("알러지");
 
         allergy_num = intent.getExtras().getInt("알러지개수");
+        //isContained = intent.getExtras().getInt("isContained");
 
-        Log.d("알러지" , allergyListSplitedArray[0]);
 
         for(int i = 0; i < 15; i++){
             Log.d("성분"+ i, rawMaterialSplitedArray[i]);
@@ -186,7 +187,7 @@ public class Product_Information extends AppCompatActivity {
             String allergy_text_num = Integer.toString(allergy_num);
             allergy_text.setText(allergy_text_num);
         String allergy_list_add = "";
-            for(int i = 0; i < allergyListSplitedArray.length; i++) {
+            for(int i = 0; i < allergy_num; i++) {
                 if(allergyListSplitedArray[i] == null)
                 {
                     break;

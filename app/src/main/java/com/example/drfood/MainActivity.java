@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +39,8 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+    private BackKeyClickHandler backKeyClickHandler;
+
     ImageButton startButton;
     ImageButton Button;
     ImageButton UserButton;
@@ -60,6 +65,8 @@ public class MainActivity extends Activity {
     String Additives_Name[] = new String[100];
     String No_Additives_Name[] = new String[100];
     int No_Additives_Num = 0;
+    int allergy_num_intent = 0;
+    int isContained = 0;
 
     String Intent_rawMaterialSplitedArray[] = new String[100];
     String Intent_allergyListSplitedArray[] = new String[10];
@@ -83,13 +90,34 @@ public class MainActivity extends Activity {
     String Temp4;
     int Count;
 
+    SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        backKeyClickHandler = new BackKeyClickHandler(this);
         //초기화
         Allegy_Exgist_index = new ArrayList<Integer>();
         Allegy_Exgist_index.clear();
+
+        searchView = findViewById(R.id.search_ex);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Snack_Name = query;
+                pharm = new materialParser();
+                pharm.execute();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
         //데이터 베이스 주소 가져오기
@@ -158,6 +186,12 @@ public class MainActivity extends Activity {
         Allegy_Types.add("계피");        Allegy_Types.add("마늘");        Allegy_Types.add("버섯");        Allegy_Types.add("당근");
         Allegy_Types.add("오이");        Allegy_Types.add("쌀");        Allegy_Types.add("번데기");
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        //super.onBackPressed();
+        backKeyClickHandler.onBackPressed();
     }
 
     private boolean getCameraPermission() {
@@ -269,6 +303,7 @@ public class MainActivity extends Activity {
                 URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm="
                         + Snack_Name);
 
+
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(true);
                 XmlPullParser xpp = factory.newPullParser();
@@ -279,16 +314,25 @@ public class MainActivity extends Activity {
 
                 ArrayList<String> materialList = new ArrayList<>();
                 ArrayList<String> allergyList = new ArrayList<>();
-
-                while (event_type != XmlPullParser.END_DOCUMENT) {
                 int i = 0;
+                while (event_type != XmlPullParser.END_DOCUMENT && (i != 1)) {
                     if (event_type == XmlPullParser.START_TAG) {
                         tag = xpp.getName();
                     } else if (event_type == XmlPullParser.TEXT) {
                         /*
                          * 성분만 가져와 본다.
                          */
-                        if (tag.equals("rawmtrl")) {
+                        if(tag.equals("totalCount")) {
+                            if(!xpp.getText().equals("\n")){
+                                String count = xpp.getText();
+                                if(count.equals("0")){
+                                    Intent popup_intent = new Intent(MainActivity.this, no_db_popup_activity.class);
+                                    startActivityForResult(popup_intent, 1);
+                                    this.cancel(true);
+                                }
+                            }
+                        }
+                        else if (tag.equals("rawmtrl")) {
                             if(!xpp.getText().equals("\n")){
                                 rawMaterial = xpp.getText();
                             }
@@ -329,10 +373,10 @@ public class MainActivity extends Activity {
             String[] rawMaterialSplited = new String[8];
             String[] allergyListSplited = new String[8];
             if(rawMaterial != null && rawMaterial != "") {
-                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,");
+                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s");
             }
             if(allergy != null && rawMaterial != "") {
-                allergyListSplited = allergy.split("\\,|\\s|\\(|\\)");
+                allergyListSplited = allergy.split("[\\W]");
             }
 
             final List<String> rawMaterialSplitedArray = new ArrayList<>();
@@ -364,15 +408,18 @@ public class MainActivity extends Activity {
 
             while(rawIt.hasNext()){
                 String test = rawIt.next();
-                if(test.contains("산") || test.contains("%")){
+                if(test.contains("산") || test.contains("%") || test.contains("러시아") ||test.contains("헝가리") || test.contains("세르비아") || test.contains("말레이시아")
+                || test.contains("베트남") || test.contains("미국")){
                     rawIt.remove();
                 }
             }
             while(allergyIt.hasNext()){
                 if(allergyIt.next().equals("함유")){
                     allergyIt.remove();
+                    isContained++;
                 }
             }
+
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
                 Log.e("재려전부다",rawMaterialSplitedArray.get(i));
                 final String temp = rawMaterialSplitedArray.get(i);
@@ -394,14 +441,32 @@ public class MainActivity extends Activity {
                             Log.d("재영이빠돌아"+ No_Additives_Num +"  "  , No_Additives_Name[No_Additives_Num]);
                             No_Additives_Num++;
                         }*/
+
+
                         if(i_num + 1 == rawMaterialSplitedArray.size() ){
                             if(Additives_Num == 0){
                                 Additives_Name[0] = "없음";
                                 Additives_EWG[0] = "없음";
                             }
-                            int allergy_num_intent = allergyListSplitedArray.size();
+                            int size = allergyListSplitedArray.size();
+                            for(int i = 0; i < allergyListSplitedArray.size(); i++){
+                                if(!(TextUtils.isEmpty(allergyListSplitedArray.get(i)))){
+                                    Log.e("알러지전부다",allergyListSplitedArray.get(i));
+                                    allergy_num_intent++;
+                                }
+                                else{
+                                    allergyListSplitedArray.remove(i);
+                                    i--;
+                                }
+                            }
+                            for(int i = 0; i < allergy_num_intent; i++){
+                                //Log.e("알러지넘버인텐트",allergy_num_intent);
+                                Log.e("알러지전부다2",allergyListSplitedArray.get(i));
+                                Intent_allergyListSplitedArray[i] = allergyListSplitedArray.get(i);
+                                Log.e("알러지전부다3",Intent_allergyListSplitedArray[i]);
+                            }
                             String str = Integer.toString(allergyListSplitedArray.size());
-                            Log.e("알러지개수임ㅇㅇㅇㅇ",str);
+                            Log.e("알러지개수임ㅇㅇㅇㅇ",Integer.toString(allergy_num_intent));
                             intent_PDInfo.putExtra("성분EWG", Additives_EWG);
                             intent_PDInfo.putExtra("성분Name", Additives_Name);
                             intent_PDInfo.putExtra("성분Num", Additives_Num);
@@ -421,12 +486,7 @@ public class MainActivity extends Activity {
             }
 
 
-
-            for(int i = 0; i < allergyListSplitedArray.size(); i++){
-                Log.e("알러지전부다",allergyListSplitedArray.get(i));
-                Intent_allergyListSplitedArray[i] = allergyListSplitedArray.get(i);
-
-            }
+            allergy_num_intent = 0;
             Log.e("이미지URL",imgUrl);
             //Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
             intent_PDInfo.putExtra("이미지",imgUrl);
@@ -436,6 +496,7 @@ public class MainActivity extends Activity {
             intent_PDInfo.putExtra("Allegy_Types",Allegy_Types);
             intent_PDInfo.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
             intent_PDInfo.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
+            //intent_PDInfo.putExtra("isContained",isContained);
 
 
 
@@ -446,6 +507,19 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onDestroy(){
+        try {
+            if (pharm.getStatus() == AsyncTask.Status.RUNNING) {
+                pharm.cancel(true);
+            }
+            else{
+
+            }
+        } catch (Exception e) {
+        }
+        super.onDestroy();
+    }
 
 
 }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="경고! 경고!"
+            android:text="알림!"
             android:textSize="20sp"
             android:textColor="#fff"
             android:gravity="center"
@@ -23,20 +23,21 @@
 
     <!-- Notice -->
     <LinearLayout
-        android:padding="24dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="90dp"
+        android:orientation="vertical"
+        android:padding="24dp">
+
         <TextView
-            android:text="죽고싶습니까? DB에 없습니다."
             android:id="@+id/txtText"
-            android:textSize="15sp"
-            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginBottom="3dp"
             android:alpha="0.87"
             android:gravity="center"
-            android:layout_marginBottom="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:text="해당 제품에 대한 정보는 아직 준비중입니다!"
+            android:textColor="#000"
+            android:textSize="14sp" />
     </LinearLayout>
     <!-- Notice -->
 
