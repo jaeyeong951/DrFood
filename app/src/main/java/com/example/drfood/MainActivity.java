@@ -221,6 +221,7 @@ public class MainActivity extends Activity {
             Trans_Allegy_Exgist_index = data.getStringExtra("Trans_Allegy_Exgist_index");
             Allegy_Exgist_Num = data.getIntExtra("Allegy_Exgist_Num", 0);
 
+
             Temp1 =0;
             Temp2 = 0;
             Temp4 = Trans_Allegy_Exgist_index;

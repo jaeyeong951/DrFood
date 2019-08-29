@@ -42,6 +42,7 @@ public class LoginPageAct extends AppCompatActivity {
     private String UserUid;
     private String UserName;
     private String UserEmail;
+    private Boolean Exgist_User;
     private int Allegy_Exgist_Num;
     private String Trans_Allegy_Exgist_index;
 
@@ -138,6 +139,7 @@ public class LoginPageAct extends AppCompatActivity {
                             UserUid = user.getUid();
                             UserName = user.getDisplayName();
                             UserEmail = user.getEmail();
+                            Exgist_User = false;
                             Log.d("UserUid", UserUid);
                             Log.d("UserName",UserName);
                             Log.d("UserEmail", UserEmail);
@@ -148,6 +150,7 @@ public class LoginPageAct extends AppCompatActivity {
                             intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
                             intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
+
                             // 여기 처음에 어플 깔고 로그인하면 어플 꺼짐. 다시 실행하면 될꺼임....
                             //꺼지는 문제는 곧 해결할꺼임
                             //사용자가 DB에 있는 사용자인지 없는 사용자읹지 알기위해
@@ -156,16 +159,16 @@ public class LoginPageAct extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                    if(!dataSnapshot.child("name").exists()) {
                                        Log.d("여기까지","됬나?");
-                                       /*mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
+                                       mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
                                        mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
                                        mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
-                                       mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");*/
-                                       Create();
+                                       mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
+                                       Exgist_User = true;
 
 
                                        setResult(3000,intent);
                                        finish();
-                                   }else{
+                                   }else if(!Exgist_User){
                                        Trans_Allegy_Exgist_index = dataSnapshot.child("알러지 번호").getValue().toString();
                                        Temp = dataSnapshot.child("알러지 개수").getValue().toString();
                                        Allegy_Exgist_Num = Integer.parseInt(Temp);
@@ -227,11 +230,11 @@ public class LoginPageAct extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     // [END signin]
-
+/*
     private void Create(){
         mDatabase.child("people").child(UserUid).child("name").setValue(UserName);
         mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
         mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
         mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
-    }
+    }*/
 }
