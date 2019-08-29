@@ -45,6 +45,7 @@ public class Product_Information extends AppCompatActivity {
     int No_Additive_Num;
     String rawMaterialSplitedArray[] = new String[100];
     String allergyListSplitedArray[] = new String[10];
+    int No_Additives_Num;
     int Additive_Num;
     int allergy_num;
     int safe_num = 0;
@@ -93,6 +94,7 @@ public class Product_Information extends AppCompatActivity {
         allergyListSplitedArray = intent.getExtras().getStringArray("알러지");
 
         allergy_num = intent.getExtras().getInt("알러지개수");
+        No_Additives_Num = intent.getExtras().getInt("No_Additives_Num");
         //isContained = intent.getExtras().getInt("isContained");
 
 
@@ -154,6 +156,8 @@ public class Product_Information extends AppCompatActivity {
                 intent2.putExtra("첨가물ewg",Additive_EWG);
                 intent2.putExtra("첨가물이름",Additive_Name);
                 intent2.putExtra("no첨가물",No_Additive_Name);
+                intent2.putExtra("첨가물개수",Additive_Num);
+                intent2.putExtra("원재료개수",No_Additives_Num);
                 startActivity(intent2);
             }
         });
@@ -163,7 +167,7 @@ public class Product_Information extends AppCompatActivity {
     {
 
 
-        for(int i = 0; i<additivie_EWG.length; i++)
+        for(int i = 0; i<Additive_Num; i++)
         {
             if(additivie_EWG[i] == null){
                 break;

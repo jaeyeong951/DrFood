@@ -31,6 +31,8 @@ public class Product_infomation_compose extends AppCompatActivity {
     int care_num = 0;
     int harm_num = 0;
     int none_num = 0;
+    int addtive_num;
+    int No_Additives_Num;
 
     String Additive_EWG[] = new String[100];
     String Additive_Name[] = new String[100];
@@ -67,9 +69,11 @@ public class Product_infomation_compose extends AppCompatActivity {
         care_num = intent.getExtras().getInt("주의num");
         harm_num = intent.getExtras().getInt("위험num");
         none_num = intent.getExtras().getInt("Nonenum");
+        addtive_num = intent.getExtras().getInt("첨가물개수");
         Additive_EWG = intent.getExtras().getStringArray("첨가물ewg");
         Additive_Name = intent.getExtras().getStringArray("첨가물이름");
         No_Additive_Name = intent.getExtras().getStringArray("no첨가물");
+        No_Additives_Num = intent.getExtras().getInt("원재료개수");
 
         LinearLayout.LayoutParams lay = (LinearLayout.LayoutParams) safe_bar.getLayoutParams();
         lay.weight = safe_num;
@@ -88,16 +92,6 @@ public class Product_infomation_compose extends AppCompatActivity {
         care_text.setText(care_num_str);
         harm_text.setText(harm_num_str);
 
-        for (int i = 0; i < 100; i++) {
-            if (Additive_EWG[i] == null) {
-                break;
-            }
-            Log.e("룰룰ㄹ라", Additive_EWG[i]);
-            Log.e("룰라2", Additive_Name[i]);
-            Log.e("룰라3", No_Additive_Name[i]);
-        }
-
-
         adapter = new ListViewAdapter();
         listView = (ListView) findViewById(R.id.arrayList);
 
@@ -109,14 +103,14 @@ public class Product_infomation_compose extends AppCompatActivity {
         listView2.setAdapter(adapter2);
 
         //adapter를 통한 값 전달
-        for (int i = 0; i < Additive_Name.length; i++) {
+        for (int i = 0; i < addtive_num; i++) {
             if(Additive_Name[i] == null)
                 break;
             adapter.addVO(Additive_Name[i], Additive_EWG[i]);
         }
 
 
-        for(int i = 0; i < No_Additive_Name.length; i++){
+        for(int i = 0; i < No_Additives_Num; i++){
             if(No_Additive_Name[i] == null)
                 break;
             if(No_Additive_Name[i].equals(""))

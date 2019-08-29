@@ -400,7 +400,7 @@ public class MainActivity extends Activity {
             //검토중
             Iterator<String> rawIt = rawMaterialSplitedArray.iterator();
             Iterator<String> allergyIt = allergyListSplitedArray.iterator();
-            Num_Size = 0;
+            Num_Size = rawMaterialSplitedArray.size();
             Additives_Num = 0;
             No_Additives_Num = 0;
             Boolean Temp_Exgist = false;
@@ -489,7 +489,7 @@ public class MainActivity extends Activity {
             Log.e("알러지개수임ㅇㅇㅇㅇ",Integer.toString(allergy_num_intent));
 
 
-            allergy_num_intent = 0;
+
             Log.e("이미지URL",imgUrl);
             //Intent intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
             intent_PDInfo.putExtra("이미지",imgUrl);
@@ -500,8 +500,9 @@ public class MainActivity extends Activity {
             intent_PDInfo.putExtra("Allegy_Types",Allegy_Types);
             intent_PDInfo.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
             intent_PDInfo.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
+            intent_PDInfo.putExtra("No_Additives_Num",Num_Size);
             //intent_PDInfo.putExtra("isContained",isContained);
-
+            allergy_num_intent = 0;
 
 
 
