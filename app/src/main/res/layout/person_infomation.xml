@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
         android:id="@+id/topPanel_1"
         android:layout_width="match_parent"
@@ -21,17 +24,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="회원 정보"
+            android:text="프로필 관리"
             android:textColor="#000000"
             android:textSize="24sp" />
     </RelativeLayout>
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/abc"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/topPanel_1"
-        android:background="#3E000000">
-    </RelativeLayout>
+        android:orientation="vertical"
+       >
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/User_Profile"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/can_round"
+            android:layout_marginTop="10dp"
+            app:siBorderWidth="6dp"
+            android:scaleType="centerInside"
+            app:siBorderColor="#000"/>
+
+        <TextView
+            android:id="@+id/Person_Nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text=".."/>
+
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/abcd"
         android:layout_width="match_parent"
@@ -41,13 +65,23 @@
         android:gravity="center_vertical"
         >
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/기본정보"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:text="기본 정보"
             android:textSize="18dp"
             android:layout_marginLeft="15dp"
             android:textColor="#000000"
             android:textStyle="bold"/>
+        <Button
+            android:id="@+id/수정하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf = "@+id/기본정보"
+            android:text="수정하기->"
+            android:textColor="#555252"
+            />
     </RelativeLayout>
 
     <RelativeLayout
@@ -56,6 +90,7 @@
         android:layout_height="100dp"
         android:layout_below="@+id/abcd"
         >
+
         <TextView
             android:id="@+id/text_email"
             android:layout_width="wrap_content"
@@ -72,6 +107,40 @@
             android:textSize="16dp"
             android:text="taxol1203@gmail.com"/>
 
+
+        <TextView
+            android:id="@+id/성별"
+            android:background="@drawable/rounded"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_below="@+id/person_email"
+            android:text="성별"
+            android:layout_marginLeft="20dp"
+            />
+        <TextView
+            android:id="@+id/나이"
+            android:background="@drawable/rounded"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_below="@+id/person_email"
+            android:layout_toRightOf="@+id/성별"
+            android:text="나이"
+            android:layout_marginLeft="20dp"
+            />
+        <TextView
+            android:id="@+id/지역"
+            android:background="@drawable/rounded"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_below="@+id/person_email"
+            android:layout_toRightOf="@+id/나이"
+            android:text="지역"
+            android:layout_marginLeft="20dp"
+            />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -82,17 +151,30 @@
         android:background="#11000000"
         android:gravity="center_vertical"
         >
+
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="상세 정보"
+            android:id="@+id/알레르기"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:text="알레르기"
             android:textSize="18dp"
             android:layout_marginLeft="15dp"
             android:textColor="#000000"
             android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/수정하기2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/알레르기"
+            android:text="수정하기->"
+            android:textColor="#555252"
+            android:onClick="mOnPopupClick"/>
     </RelativeLayout>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/text_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,52 +238,28 @@
         android:layout_toRightOf="@+id/person_age"
         android:layout_below="@+id/rg_sex"
         android:text="년생"
-        android:layout_marginTop="20dp"/>
-
+        android:layout_marginTop="20dp"/>-->
 
 
 
     <LinearLayout
-        android:id="@+id/button팝업"
-        android:paddingBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_below="@+id/text_age"
+        android:id="@+id/알러지공간"
+        android:layout_below="@+id/abcdef"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:text="팝업"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/Allegy_List_User"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="mOnPopupClick"/>
+            >
+
+        </ListView>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:paddingBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_below="@+id/button팝업"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/txtResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
-
-        <Button
-            android:id="@+id/User_Information_Save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="저장"
-            />
-        <Button
-            android:id="@+id/Go_Back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뒤로가기"
-            />
-    </LinearLayout>
 
 
 

@@ -165,6 +165,7 @@ public class MainActivity extends Activity {
                 User_Information.putExtra("UserUid", UserUid);
                 User_Information.putExtra("UserName", UserName);
                 User_Information.putExtra("UserEmail", UserEmail);
+                User_Information.putExtra("Allegy_Types", Allegy_Types);
                 User_Information.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
                 User_Information.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
                 User_Information.putExtra("Trans_Allegy_Exgist_index",Trans_Allegy_Exgist_index);
@@ -426,7 +427,7 @@ public class MainActivity extends Activity {
                 Intent_rawMaterialSplitedArray[i] = rawMaterialSplitedArray.get(i);
                 No_Additives_Name[i] = temp;
                 final int i_num = i;
-
+                if(temp.equals("")){continue;}
                 mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -444,34 +445,14 @@ public class MainActivity extends Activity {
 
 
                         if(i_num + 1 == rawMaterialSplitedArray.size() ){
-                            if(Additives_Num == 0){
+                                if(Additives_Num == 0){
                                 Additives_Name[0] = "없음";
                                 Additives_EWG[0] = "없음";
                             }
-                            int size = allergyListSplitedArray.size();
-                            for(int i = 0; i < allergyListSplitedArray.size(); i++){
-                                if(!(TextUtils.isEmpty(allergyListSplitedArray.get(i)))){
-                                    Log.e("알러지전부다",allergyListSplitedArray.get(i));
-                                    allergy_num_intent++;
-                                }
-                                else{
-                                    allergyListSplitedArray.remove(i);
-                                    i--;
-                                }
-                            }
-                            for(int i = 0; i < allergy_num_intent; i++){
-                                //Log.e("알러지넘버인텐트",allergy_num_intent);
-                                Log.e("알러지전부다2",allergyListSplitedArray.get(i));
-                                Intent_allergyListSplitedArray[i] = allergyListSplitedArray.get(i);
-                                Log.e("알러지전부다3",Intent_allergyListSplitedArray[i]);
-                            }
-                            String str = Integer.toString(allergyListSplitedArray.size());
-                            Log.e("알러지개수임ㅇㅇㅇㅇ",Integer.toString(allergy_num_intent));
                             intent_PDInfo.putExtra("성분EWG", Additives_EWG);
                             intent_PDInfo.putExtra("성분Name", Additives_Name);
                             intent_PDInfo.putExtra("성분Num", Additives_Num);
                             intent_PDInfo.putExtra("No성분Name", No_Additives_Name);
-                            intent_PDInfo.putExtra("알러지개수",allergy_num_intent);
                             //intent_PDInfo.putExtra("No성분Num", No_Additives_Num);
                             Log.d("성분EWG", Additives_EWG.toString());
                             startActivity(intent_PDInfo);
@@ -483,7 +464,29 @@ public class MainActivity extends Activity {
                     }
                 });
 
+
+
             }
+
+            int size = allergyListSplitedArray.size();
+            for(int j = 0; j < allergyListSplitedArray.size(); j++){
+                if(!(TextUtils.isEmpty(allergyListSplitedArray.get(j)))){
+                    Log.e("알러지전부다",allergyListSplitedArray.get(j));
+                    allergy_num_intent++;
+                }
+                else{
+                    allergyListSplitedArray.remove(j);
+                    j--;
+                }
+            }
+            for(int k = 0; k < allergy_num_intent; k++){
+                //Log.e("알러지넘버인텐트",allergy_num_intent);
+                Log.e("알러지전부다2",allergyListSplitedArray.get(k));
+                Intent_allergyListSplitedArray[k] = allergyListSplitedArray.get(k);
+                Log.e("알러지전부다3",Intent_allergyListSplitedArray[k]);
+            }
+            String str = Integer.toString(allergyListSplitedArray.size());
+            Log.e("알러지개수임ㅇㅇㅇㅇ",Integer.toString(allergy_num_intent));
 
 
             allergy_num_intent = 0;
@@ -493,6 +496,7 @@ public class MainActivity extends Activity {
             intent_PDInfo.putExtra("이름",Snack_Name);
             intent_PDInfo.putExtra("성분",Intent_rawMaterialSplitedArray);
             intent_PDInfo.putExtra("알러지",Intent_allergyListSplitedArray);
+            intent_PDInfo.putExtra("알러지개수",allergy_num_intent);
             intent_PDInfo.putExtra("Allegy_Types",Allegy_Types);
             intent_PDInfo.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
             intent_PDInfo.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);

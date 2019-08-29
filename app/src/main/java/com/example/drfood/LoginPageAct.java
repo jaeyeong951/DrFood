@@ -33,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class LoginPageAct extends AppCompatActivity {
@@ -47,6 +49,7 @@ public class LoginPageAct extends AppCompatActivity {
     private Boolean Exgist_User;
     private int Allegy_Exgist_Num;
     private String Trans_Allegy_Exgist_index;
+
 
     //자동 로그인을 위한 버튼
     private SharedPreferences auto;
