@@ -114,5 +114,15 @@ public class QRCodeScan extends Activity {
                 }
             }
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent();
+        intent.putExtra("key",999);
+        setResult(0, intent);
+        finish();
     }
 }

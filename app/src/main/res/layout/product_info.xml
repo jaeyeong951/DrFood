@@ -105,7 +105,8 @@
         android:id="@+id/product_compose_layout"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_below="@+id/edge1">
+        android:layout_below="@+id/edge1"
+        android:background="?attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/textView4"

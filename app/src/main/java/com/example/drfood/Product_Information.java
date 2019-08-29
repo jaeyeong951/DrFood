@@ -98,10 +98,9 @@ public class Product_Information extends AppCompatActivity {
         //isContained = intent.getExtras().getInt("isContained");
 
 
-        for(int i = 0; i < 15; i++){
-            Log.d("성분"+ i, rawMaterialSplitedArray[i]);
-
-        }
+//        for(int i = 0; i < 15; i++){
+//            Log.d("성분"+ i, rawMaterialSplitedArray[i]);
+//        }
 
         Log.d("성분EWG", Additive_EWG[0]);
         Log.d("성분Name", Additive_Name[0]);
@@ -207,17 +206,16 @@ public class Product_Information extends AppCompatActivity {
             harm_text.setText(harm_num_str);
 
             String allergy_text_num = Integer.toString(allergy_num);
+            Log.e("알러지갯수",allergy_text_num);
             allergy_text.setText(allergy_text_num);
-        String allergy_list_add = "";
+            String allergy_list_add = "";
             for(int i = 0; i < allergy_num; i++) {
                 if(allergyListSplitedArray[i] == null)
                 {
                     break;
                 }
                 allergy_list_add = allergy_list_add + allergyListSplitedArray[i] + " ";
-
             }
             allergy_list.setText(allergy_list_add);
     }
-
 }
