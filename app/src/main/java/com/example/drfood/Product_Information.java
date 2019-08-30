@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -174,7 +175,38 @@ public class Product_Information extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(String temp : Additive_Name){
+            arrayList.add(temp);
+        }
+        ArrayList<String> arrayList_ewg = new ArrayList<>();
+        for(String temp : Additive_EWG){
+            arrayList_ewg.add(temp);
+        }
 
+        for (int i = 0; i < arrayList.size(); i++) {
+            for (int j = 0; j < arrayList.size(); j++) {
+                if (i == j) {
+                } else if (!TextUtils.isEmpty(arrayList.get(j))) {
+                    if(arrayList.get(j).equals(arrayList.get(i))) {
+                        arrayList.remove(j);
+                        arrayList_ewg.remove(j);
+                        Additive_Num--;
+                    }
+                }
+            }
+        }
+        Additive_Name = new String[arrayList.size()];
+        int size = 0;
+        for(String temp: arrayList){
+            Additive_Name[size++] = temp;
+        }
+
+        Additive_EWG = new String[arrayList_ewg.size()];
+        size = 0;
+        for(String temp: arrayList_ewg){
+            Additive_EWG[size++] = temp;
+        }
         make_bar(Additive_EWG);
         go_to_compose.setOnClickListener(new View.OnClickListener() {
             @Override
