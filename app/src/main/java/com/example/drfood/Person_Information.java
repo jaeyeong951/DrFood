@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -43,7 +45,10 @@ public class Person_Information extends Activity {
     ImageButton Back_Button;
     Button Save_btn;
     ListView listview;
+    TextView Text_S;
+    TextView Text_Age;
 
+    ArrayAdapter adapter;
 
     Intent Main_Back;
 
@@ -51,6 +56,8 @@ public class Person_Information extends Activity {
     private String UserUid;
     private String UserEmail;
     private String UserName;
+    private String UserAge;
+    private String UserS;
     ArrayList<String> Allegy_Types;
     ArrayList<String> Apeal_Types;
 
@@ -59,13 +66,16 @@ public class Person_Information extends Activity {
     String Trans_Allegy_Exgist_index;
     int Allegy_Exgist_Num;
     int OneMale_TwoFemale;
-    int Age;
 
     //데이터베이스
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     Bitmap bitmap;
 
+
+    String Check_Age;
+    Boolean Check_Male;
+    Boolean Check_Female;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +88,8 @@ public class Person_Information extends Activity {
         Apeal_Types = new ArrayList<String>();
         Apeal_Types.clear();
         Allegy_Types.clear();
+        Check_Male = false;
+        Check_Female = false;
 
         final FirebaseUser user = mAuth.getCurrentUser();
         CircularImageView user_profile = (CircularImageView)findViewById(R.id.User_Profile);
@@ -116,10 +128,14 @@ public class Person_Information extends Activity {
         UserUid = Got_Data.getStringExtra("UserUid");
         UserEmail = Got_Data.getStringExtra("UserEmail");
         UserName = Got_Data.getStringExtra("UserName");
+        UserAge = Got_Data.getStringExtra("UserAge");
+        UserS = Got_Data.getStringExtra("UserS");
         Allegy_Exgist_index = Got_Data.getIntegerArrayListExtra("Allegy_Exgist_index");
         Allegy_Exgist_Num = Got_Data.getIntExtra("Allegy_Exgist_Num",0);
         Trans_Allegy_Exgist_index = Got_Data.getStringExtra("Trans_Allegy_Exgist_index");
         Allegy_Types = Got_Data.getStringArrayListExtra("Allegy_Types");
+        Text_Age = (TextView)findViewById(R.id.나이);
+        Text_S = (TextView)findViewById(R.id.성별);
 
         Main_Back.putExtra("Allegy_Exgist_index",Allegy_Exgist_index);
         Main_Back.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
@@ -135,6 +151,18 @@ public class Person_Information extends Activity {
         listview = (ListView)findViewById(R.id.Allegy_List_User);
 
 
+
+        //성별, 나이
+        if(UserS.equals("모름")){
+            Text_S.setVisibility(View.GONE);
+        }else{
+            Text_S.setText(UserS);
+        }
+        if(UserAge.equals("0")){
+            Text_Age.setVisibility(View.GONE);
+        }else{
+            Text_Age.setText(UserAge + "세");
+        }
         //이메일 부분 수정
         Person_Email.setText(UserEmail);
         //닉네임 부분 수정
@@ -143,7 +171,7 @@ public class Person_Information extends Activity {
         for(int i = 0; i < Allegy_Exgist_Num; i++){
             Apeal_Types.add(Allegy_Types.get(Allegy_Exgist_index.get(i)));
         }
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Apeal_Types){
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Apeal_Types){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 // Get the Item from ListView
@@ -155,9 +183,7 @@ public class Person_Information extends Activity {
 
                 // Set the text color of TextView (ListView Item)
                 tv.setTextColor(Color.BLACK);
-                tv.setBackground(getResources().getDrawable(R.drawable.rounded_allegy));
-                tv.setTextSize(12);
-                tv.setHeight(10);
+                tv.setWidth(1000);
 
                 // Generate ListView Item using TextView
                 return view;
@@ -183,7 +209,10 @@ public class Person_Information extends Activity {
 
     //버튼
     public void mOnPopupClick2(View v){
-
+        Intent Basic_info = new Intent(this, popup_basic.class);
+        Basic_info.putExtra("UserAge", UserAge);
+        Basic_info.putExtra("UserS", UserS);
+        startActivityForResult(Basic_info, 2000);
     }
 
     //버튼
@@ -227,8 +256,60 @@ public class Person_Information extends Activity {
                 for(int i = 0; i < Allegy_Exgist_Num; i++){
                     Apeal_Types.add(Allegy_Types.get(Allegy_Exgist_index.get(i)));
                 }
-                Apeal_Types.notify();
+                adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Apeal_Types){
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent){
+                        // Get the Item from ListView
+                        View view = super.getView(position, convertView, parent);
+                        view.isHorizontalFadingEdgeEnabled();
+
+                        // Initialize a TextView for ListView each Item
+                        TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                        // Set the text color of TextView (ListView Item)
+                        tv.setTextColor(Color.BLACK);
+                        tv.setWidth(1000);
+
+
+                        // Generate ListView Item using TextView
+                        return view;
+                    }
+                };
+                listview.setAdapter(adapter);
+
             }
+        }else if(requestCode==2000) {
+            Check_Male = data.getBooleanExtra("Check_Male", false);
+            Check_Female = data.getBooleanExtra("Check_Female", false);
+            Check_Age = data.getStringExtra("Check_Age");
+            if(!Check_Male && !Check_Female){
+                UserS = "모름";
+            }
+            UserAge = Check_Age;
+            if(Check_Female){
+                Text_S.setText("여자");
+                UserS = "여자";
+                mDatabase.child("people").child(UserUid).child("성별").setValue("여자");
+                Text_S.setVisibility(View.VISIBLE);
+            }
+            if(Check_Male){
+                Text_S.setText("남자");
+                UserS = "남자";
+                mDatabase.child("people").child(UserUid).child("성별").setValue("남자");
+                Text_S.setVisibility(View.VISIBLE);
+            }
+            if(UserS.equals("모름")){
+                Text_S.setVisibility(View.GONE);
+            }
+            if(UserAge.equals("0")){
+                Text_Age.setVisibility(View.GONE);
+            }else{
+                Text_Age.setText(UserAge + "세");
+                Text_Age.setVisibility(View.VISIBLE);
+            }
+
+
+            mDatabase.child("people").child(UserUid).child("나이").setValue(Check_Age);
         }
     }
 

@@ -95,7 +95,8 @@
                 android:layout_marginLeft="12dp"
                 />
             <EditText
-                android:id="@+id/나이"
+                android:id="@+id/Age"
+                android:text="0"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

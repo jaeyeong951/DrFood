@@ -75,10 +75,13 @@ public class MainActivity extends Activity {
     private String UserUid;
     private String UserEmail;
     private String UserName;
+    private String UserAge;
+    private String UserS;
     private ArrayList<String> Allegy_Types;
     private int Allegy_Exgist_Num;
     private ArrayList<Integer> Allegy_Exgist_index;
     private String Trans_Allegy_Exgist_index;
+
 
 
     Intent intent_PDInfo;
@@ -101,6 +104,9 @@ public class MainActivity extends Activity {
         //초기화
         Allegy_Exgist_index = new ArrayList<Integer>();
         Allegy_Exgist_index.clear();
+        UserAge = "0";
+        UserS = "";
+
 
         searchView = findViewById(R.id.search_ex);
         searchView.setIconified(false);
@@ -167,6 +173,8 @@ public class MainActivity extends Activity {
                 User_Information.putExtra("UserUid", UserUid);
                 User_Information.putExtra("UserName", UserName);
                 User_Information.putExtra("UserEmail", UserEmail);
+                User_Information.putExtra("UserAge", UserAge);
+                User_Information.putExtra("UserS", UserS);
                 User_Information.putExtra("Allegy_Types", Allegy_Types);
                 User_Information.putExtra("Allegy_Exgist_index", Allegy_Exgist_index);
                 User_Information.putExtra("Allegy_Exgist_Num",Allegy_Exgist_Num);
@@ -258,6 +266,8 @@ public class MainActivity extends Activity {
             UserUid = data.getStringExtra("UserUid");
             UserName = data.getStringExtra("UserName");
             UserEmail = data.getStringExtra("UserEmail");
+            UserAge = data.getStringExtra("UserAge");
+            UserS = data.getStringExtra("UserS");
             Trans_Allegy_Exgist_index = data.getStringExtra("Trans_Allegy_Exgist_index");
             Allegy_Exgist_Num = data.getIntExtra("Allegy_Exgist_Num", 0);
 

@@ -47,9 +47,15 @@
             android:configChanges="screenSize|orientation">
         </activity>
         <!-- 팝업 Activity -->
-        <activity android:name=".AllegyPopup" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".AllegyPopup" android:theme="@android:style/Theme.Dialog"
+            android:configChanges="screenSize|orientation"/>
         <activity android:name=".Product_infomation_compose"
             android:configChanges="screenSize|orientation">
+        </activity>
+        <activity android:name=".popup_basic"
+            android:theme="@android:style/Theme.Dialog"
+            android:configChanges="screenSize|orientation">
+
         </activity>
 
     </application>

@@ -46,6 +46,8 @@ public class LoginPageAct extends AppCompatActivity {
     private String UserUid;
     private String UserName;
     private String UserEmail;
+    private String UserAge;
+    private String UserS;
     private Boolean Exgist_User;
     private int Allegy_Exgist_Num;
     private String Trans_Allegy_Exgist_index;
@@ -163,6 +165,8 @@ public class LoginPageAct extends AppCompatActivity {
                             UserUid = user.getUid();
                             UserName = user.getDisplayName();
                             UserEmail = user.getEmail();
+                            UserAge = "0";
+                            UserS = "모름";
                             Exgist_User = false;
                             Log.d("UserUid", UserUid);
                             Log.d("UserName",UserName);
@@ -171,6 +175,8 @@ public class LoginPageAct extends AppCompatActivity {
                             intent.putExtra("UserUid",UserUid);
                             intent.putExtra("UserName", UserName);
                             intent.putExtra("UserEmail",UserEmail);
+                            intent.putExtra("UserAge", UserAge);
+                            intent.putExtra("UserS", UserS);
                             intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
                             intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
@@ -187,6 +193,8 @@ public class LoginPageAct extends AppCompatActivity {
                                        mDatabase.child("people").child(UserUid).child("E-mail").setValue(UserEmail);
                                        mDatabase.child("people").child(UserUid).child("알러지 번호").setValue("9999_");
                                        mDatabase.child("people").child(UserUid).child("알러지 개수").setValue("0");
+                                       mDatabase.child("people").child(UserUid).child("성별").setValue("모름");
+                                       mDatabase.child("people").child(UserUid).child("나이").setValue("0");
                                        Exgist_User = true;
 
 
@@ -196,7 +204,11 @@ public class LoginPageAct extends AppCompatActivity {
                                        Trans_Allegy_Exgist_index = dataSnapshot.child("알러지 번호").getValue().toString();
                                        Temp = dataSnapshot.child("알러지 개수").getValue().toString();
                                        Allegy_Exgist_Num = Integer.parseInt(Temp);
+                                       UserAge = dataSnapshot.child("나이").getValue().toString();
+                                       UserS = dataSnapshot.child("성별").getValue().toString();
 
+                                       intent.putExtra("UserAge", UserAge);
+                                       intent.putExtra("UserS", UserS);
                                        intent.putExtra("Trans_Allegy_Exgist_index", Trans_Allegy_Exgist_index);
                                        intent.putExtra("Allegy_Exgist_Num", Allegy_Exgist_Num);
 
