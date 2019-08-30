@@ -2,6 +2,7 @@ package com.example.drfood;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends Activity {
 
@@ -43,6 +45,7 @@ public class MainActivity extends Activity {
 
     ImageButton startButton;
     ImageButton Button;
+    ImageButton Setting;
     ImageButton UserButton;
     materialParser pharm;
 
@@ -57,6 +60,13 @@ public class MainActivity extends Activity {
     String rawMaterial;
     String tag;
     String allergy;
+
+
+    //시작모드 바코드 모드 관련
+    private SharedPreferences Start_auto;
+    private SharedPreferences.Editor autoLogin;
+    String True;
+    Boolean Ready;
 
     //additives관련
     int Additives_Num = 0;
@@ -107,6 +117,11 @@ public class MainActivity extends Activity {
         UserAge = "0";
         UserS = "";
 
+        //시작모드 과련
+        Start_auto = getSharedPreferences(" Start_auto", MainActivity.MODE_PRIVATE);
+        True = Start_auto.getString("inputpas","0");
+        autoLogin = Start_auto.edit();
+        Log.d("True", ""+True);
 
         searchView = findViewById(R.id.search_ex);
         searchView.setIconified(false);
@@ -135,8 +150,14 @@ public class MainActivity extends Activity {
         //로그인 화면으로 넘어감
         Intent Go_Login_Page = new Intent(MainActivity.this,LoginPageAct.class);
 
-
         startActivityForResult(Go_Login_Page, 3000);
+
+        if(True.equals("1")){
+            Intent goNextActivity = new Intent(getApplicationContext(), QRCodeScan.class);
+            startActivityForResult(goNextActivity, 1001);
+        }
+
+
 
         //3000은 로그인
 
@@ -151,6 +172,7 @@ public class MainActivity extends Activity {
         startButton = findViewById(R.id.barcode);   // Button Boilerplate
         Button = findViewById(R.id.chips_button);
         UserButton = findViewById(R.id.human);
+        Setting = findViewById(R.id.setting);
 
         getCameraPermission();
 
@@ -181,6 +203,16 @@ public class MainActivity extends Activity {
                 User_Information.putExtra("Trans_Allegy_Exgist_index",Trans_Allegy_Exgist_index);
 
                 startActivityForResult(User_Information,3100);
+            }
+        });
+
+        Setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Setting_Page = new Intent(MainActivity.this, Setting_Activity.class);
+                True = Start_auto.getString("inputpas","0");
+                Setting_Page.putExtra("True",True);
+                startActivityForResult(Setting_Page, 3200);
             }
         });
 
@@ -300,6 +332,23 @@ public class MainActivity extends Activity {
             Log.d("Trans다다다", Trans_Allegy_Exgist_index);
             Log.d("Trans다다다", Allegy_Exgist_Num +"");
             Log.d("Trans다다다", Allegy_Exgist_index.get(0)+ "");
+        }
+        else if(requestCode == 3200){
+            Ready = data.getBooleanExtra("Ready", false);
+            Log.d("ReadyMain", ""+Ready);
+            if(Ready){
+
+                autoLogin.putString("inputpas", "1");
+                autoLogin.commit();
+                True = Start_auto.getString("inputpas","0");
+                Log.d("True1", "" + True);
+            }else{
+
+                autoLogin.putString("inputpas", "0");
+                autoLogin.commit();
+                True = Start_auto.getString("inputpas","0");
+                Log.d("True2", "" + True);
+            }
         }
 
 

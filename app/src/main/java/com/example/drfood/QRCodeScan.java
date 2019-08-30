@@ -47,6 +47,9 @@ public class QRCodeScan extends Activity {
         backbutton.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("key",999);
+                setResult(0, intent);
                 finish();
             }
         });
