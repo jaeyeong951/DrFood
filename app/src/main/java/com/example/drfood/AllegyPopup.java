@@ -69,6 +69,7 @@ public class AllegyPopup extends Activity {
                 TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
                 // Set the text color of TextView (ListView Item)
+
                 tv.setTextColor(Color.BLACK);
 
                 // Generate ListView Item using TextView

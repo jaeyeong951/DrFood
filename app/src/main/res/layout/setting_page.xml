@@ -26,7 +26,7 @@
         android:padding="1dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="60dp">
         <TextView
             android:id="@+id/Rseq0"
             android:layout_width="wrap_content"
@@ -43,21 +43,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:switchMinWidth="50dp"
-
             android:layout_marginTop="15dp"
             android:layout_marginLeft="5dp"
             />
 
 
-        <!--<TextView
-            android:id="@+id/txtText"
-            android:textSize="15sp"
-            android:textColor="#000"
-            android:alpha="0.87"
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/Rseq1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="자동로그인 모드"
             android:gravity="center"
-            android:layout_marginBottom="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />-->
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="23dp"
+            android:padding="5dp"
+            />
+        <ToggleButton
+            android:id="@+id/Switch2"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:switchMinWidth="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="5dp"
+            />
+
+
+
+
     </LinearLayout>
     <!-- Notice -->
 

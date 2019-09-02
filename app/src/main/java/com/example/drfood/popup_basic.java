@@ -59,7 +59,7 @@ public class popup_basic extends Activity {
             Male.setChecked(true);
 
         }else if(getIntent().getStringExtra("UserS").equals("여자")){
-            Check_Male = true;
+            Check_Female = true;
             Female.setChecked(true);
         }
 
@@ -87,7 +87,10 @@ public class popup_basic extends Activity {
 
         if(Check_Male && Check_Female){
             Toast.makeText(this, "성별 하나만 눌러주세요",Toast.LENGTH_SHORT).show();
-        }else {
+        }else if(!Check_Male && !Check_Female){
+            Toast.makeText(this, "성별 하나만 눌러주세요",Toast.LENGTH_SHORT).show();
+        }
+        else {
             //데이터 전달하기
             Intent intent = new Intent();
             intent.putExtra("result", "Close Popup");

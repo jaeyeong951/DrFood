@@ -92,10 +92,11 @@ public class LoginPageAct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
+                /*
                 SharedPreferences.Editor autoLogin = auto.edit();
                 autoLogin.putString("inputId", "1");
 
-                autoLogin.commit();
+                autoLogin.commit();*/
             }
         });
 

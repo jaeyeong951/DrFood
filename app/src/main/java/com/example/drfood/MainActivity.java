@@ -311,7 +311,7 @@ public class MainActivity extends Activity {
             while(Count !=Allegy_Exgist_Num){
                 Temp2 = Temp4.indexOf("_");
                 Temp3 = Temp4.substring(Temp1, Temp2);
-                Temp4 = Temp4.replace( Temp3+"_", "");
+                Temp4 = Temp4.replaceFirst( Temp3+"_", "");
 
                 Allegy_Exgist_index.add(Integer.parseInt(Temp3));
                 Log.d("Temp4", Temp4);
