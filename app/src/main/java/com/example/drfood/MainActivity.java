@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -48,7 +50,8 @@ public class MainActivity extends Activity {
     ImageButton Setting;
     ImageButton UserButton;
     materialParser pharm;
-
+    searchAsync searchAsync;
+    String newT;
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
 
     //데이터 베이스 쪽
@@ -79,7 +82,7 @@ public class MainActivity extends Activity {
     int isContained = 0;
 
     String Intent_rawMaterialSplitedArray[] = new String[100];
-    String Intent_allergyListSplitedArray[] = new String[10];
+    String Intent_allergyListSplitedArray[] = new String[20];
 
     //Person(User) 정보관련
     private String UserUid;
@@ -104,11 +107,14 @@ public class MainActivity extends Activity {
     int Count;
 
     SearchView searchView;
+    private List<String> searchList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         backKeyClickHandler = new BackKeyClickHandler(this);
         //초기화
@@ -127,6 +133,7 @@ public class MainActivity extends Activity {
         searchView.setIconified(false);
         searchView.clearFocus();
 
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -138,6 +145,9 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+
+                //}
                 return false;
             }
         });
@@ -353,7 +363,56 @@ public class MainActivity extends Activity {
 
 
     }
+    class searchAsync extends AsyncTask<Void,Void,String>{
 
+        searchAsync(){
+            searchList = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(Void... params){
+            try {
+                URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm="
+                        + newT);
+                Log.e("뉴텍",newT);
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+                XmlPullParser xpp = factory.newPullParser();
+                BufferedInputStream bis = new BufferedInputStream(url.openStream());
+                xpp.setInput(bis, "utf-8");
+
+                int event_type = xpp.getEventType();
+
+                while (event_type != XmlPullParser.END_DOCUMENT) {
+                    if (event_type == XmlPullParser.START_TAG) {
+                        tag = xpp.getName();
+                    } else if (event_type == XmlPullParser.TEXT) {
+                        /*
+                         * 성분만 가져와 본다.
+                         */
+                        if (tag.equals("prdlstNm")) {
+                            if(!xpp.getText().equals("\n")){
+                                searchList.add(xpp.getText());
+                                Log.e("제품",xpp.getText());
+                            }
+                        }
+                    } else if (event_type == XmlPullParser.END_TAG) {
+                        tag = xpp.getName();
+                        if (tag.equals("item")) {
+                            //Log.e("태그의 끝",rawMaterial);
+                            //System.out.println(rawMaterial);
+                        }
+                        //item별로 분리
+                    }
+                    event_type = xpp.next();
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return newT;
+        }
+    }
     class materialParser extends AsyncTask<String, String, String> {
 
         @Override
@@ -439,7 +498,7 @@ public class MainActivity extends Activity {
             String[] rawMaterialSplited = new String[8];
             String[] allergyListSplited = new String[8];
             if(rawMaterial != null && rawMaterial != "") {
-                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s|\\;");
+                rawMaterialSplited = rawMaterial.split("\\●|\\#|\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s|\\;|\\.|[0-9]");
             }
             if(allergy != null && rawMaterial != "") {
                 allergyListSplited = allergy.split("\\,|\\s|\\(|\\)");
@@ -465,6 +524,7 @@ public class MainActivity extends Activity {
             //검토중
             Iterator<String> rawIt = rawMaterialSplitedArray.iterator();
             Iterator<String> allergyIt = allergyListSplitedArray.iterator();
+            Count = 0;
             Num_Size = rawMaterialSplitedArray.size();
             Additives_Num = 0;
             No_Additives_Num = 0;
@@ -474,8 +534,9 @@ public class MainActivity extends Activity {
 
             while(rawIt.hasNext()){
                 String test = rawIt.next();
-                if(test.contains("산") || test.contains("%") || test.contains("러시아") ||test.contains("헝가리") || test.contains("세르비아") || test.contains("말레이시아")
-                        || test.contains("베트남") || test.contains("미국")){
+                if(test.contains("%") || test.contains("러시아") ||test.contains("헝가리") || test.contains("세르비아") || test.contains("말레이시아")
+                        || test.contains("베트남") || test.contains("미국") || test.contains("태국") || test.contains("벨기에") || test.contains("국내") || test.contains("국산") || test.contains("외국")
+                        || test.contains("스페인") || test.contains("캐나다") || test.contains("호주")){
                     rawIt.remove();
                 }
             }
@@ -486,16 +547,19 @@ public class MainActivity extends Activity {
                 }
             }
 
+            Count = rawMaterialSplitedArray.size();
+
             for(int i = 0; i < rawMaterialSplitedArray.size(); i++){
                 Log.e("재려전부다",rawMaterialSplitedArray.get(i));
                 final String temp = rawMaterialSplitedArray.get(i);
                 Intent_rawMaterialSplitedArray[i] = rawMaterialSplitedArray.get(i);
                 No_Additives_Name[i] = temp;
                 final int i_num = i;
-                if(temp.equals("")){continue;}
+                if(temp.equals("")){Count--; continue;}
                 mDatabase.child("additives").child(temp).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Count--;
                         if(dataSnapshot.exists() && (dataSnapshot.getKey() != "additives")) {
                             Additives_EWG[Additives_Num] = dataSnapshot.child("EWG").getValue().toString();
                             Additives_Name[Additives_Num] = dataSnapshot.getKey();
@@ -509,8 +573,8 @@ public class MainActivity extends Activity {
                         }*/
 
 
-                        if(i_num + 1 == rawMaterialSplitedArray.size() ){
-                                if(Additives_Num == 0){
+                        if(Count == 0 ){
+                            if(Additives_Num == 0){
                                 Additives_Name[0] = "없음";
                                 Additives_EWG[0] = "없음";
                             }

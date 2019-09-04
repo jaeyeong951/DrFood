@@ -27,6 +27,7 @@ public class Setting_Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_page);
+
         String True = getIntent().getStringExtra("True");
 
         if(True.equals("1")){
