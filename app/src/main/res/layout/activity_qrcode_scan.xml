@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/apptitle_background"
     >
     <RelativeLayout
         android:id="@+id/topPanel_1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#E4FDF3">
+        android:background="@drawable/apptitle_background">
 
         <ImageButton
             android:id="@+id/back_button"
@@ -29,22 +30,29 @@
             android:textSize="24sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <SurfaceView
+        android:id="@+id/cameraSurface"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/stroke_st"/>
 
-        <SurfaceView
-            android:id="@+id/cameraSurface"
-            android:layout_width="293dp"
-            android:layout_height="438dp"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_below="@+id/cameraSurface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yayaya"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:text="위 화면 안에 상품 QR코드 및 바코드를 맞추면 자동으로 인식됩니다."
+        />
 
-    </RelativeLayout>
+
 
 </RelativeLayout>
