@@ -1,30 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/apptitle_background"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
     android:padding="50dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_lock_outline_white" />
 
-
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_by_google_button"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        >
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/baedal"
+        android:text="Dr.food"
+        android:textColor="#128D00"
+        android:textSize="80dp" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView1"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/yayaya"
+        android:layout_centerHorizontal="true"
+        android:text="시민의 먹거리"
+        android:textSize="25dp" />
+        <TextView
+            android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="안전 먹거리"
+        android:textSize="25dp"
+        android:fontFamily="@font/yayaya"
+        android:layout_below="@id/text2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sign_in_by_google_button"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="더 많은 기능을 이용하시려면 Login을 해주세요" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_by_google_button"
+        android:layout_width="166dp"
+        android:layout_height="39dp"
+        android:layout_below="@id/text3"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="246dp">
+
     </com.google.android.gms.common.SignInButton>
 
 
-</LinearLayout>
+</RelativeLayout>
