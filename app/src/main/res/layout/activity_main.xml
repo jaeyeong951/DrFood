@@ -251,6 +251,13 @@
         android:background="@drawable/barcode_round"
         android:scaleType="fitCenter" />
 
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="153dp"
+        android:background="#F3FFFA" />
 
 
 </RelativeLayout>

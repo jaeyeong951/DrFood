@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -50,7 +53,10 @@ public class MainActivity extends Activity {
     ImageButton Setting;
     ImageButton UserButton;
     materialParser pharm;
-
+    searchAsync search;
+    searchAsync searchAsync;
+    String newT;
+    ListView search_list;
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
 
     //데이터 베이스 쪽
@@ -62,7 +68,6 @@ public class MainActivity extends Activity {
     String rawMaterial;
     String tag;
     String allergy;
-    String newT;
 
 
     //시작모드 바코드 모드 관련
@@ -108,12 +113,16 @@ public class MainActivity extends Activity {
 
     SearchView searchView;
     private List<String> searchList;
+    SearchViewAdapter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        search_list = findViewById(R.id.search_list);
+        search_list.setVisibility(View.INVISIBLE);
 
 
         backKeyClickHandler = new BackKeyClickHandler(this);
@@ -123,15 +132,18 @@ public class MainActivity extends Activity {
         UserAge = "0";
         UserS = "";
 
-        //시작모드 과련
+        //시작모드 관련
         Start_auto = getSharedPreferences(" Start_auto", MainActivity.MODE_PRIVATE);
         True = Start_auto.getString("inputpas","0");
         autoLogin = Start_auto.edit();
         Log.d("True", ""+True);
 
         searchView = findViewById(R.id.search_ex);
+        searchView.setQueryHint("검색하실 제품명을 입력하세요.");
         searchView.setIconified(false);
         searchView.clearFocus();
+
+        adapter = new SearchViewAdapter();
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -140,17 +152,53 @@ public class MainActivity extends Activity {
                 Snack_Name = query;
                 pharm = new materialParser();
                 pharm.execute();
+                search_list.setVisibility(View.GONE);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-
-                //}
-                return false;
+                search_list.setVisibility(View.VISIBLE);
+                if(newText.equals(newT)) return true;
+                else if(!newText.equals("")) {
+                    Log.e("반복","반복");
+                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                    newT = newText;
+                    search_list.setAdapter(adapter);
+                    search = new searchAsync();
+                    search.execute();
+                }
+                return true;
             }
         });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                adapter.clear();
+                adapter.notifyDataSetChanged();
+                search_list.setVisibility(View.GONE);
+                return true;
+            }
+        });
+
+            // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
+            search_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView parent, View v, int position, long id) {
+                    // get item
+                    searchViewItem item = (searchViewItem) parent.getItemAtPosition(position) ;
+
+                    Snack_Name = item.getTitle();
+                    pharm = new materialParser();
+//                    adapter.clear();
+//                    adapter.notifyDataSetChanged();
+                    pharm.execute();
+
+                }
+            }) ;
+
 
         intent_PDInfo = new Intent(MainActivity.this, Product_Information.class);
         //데이터 베이스 주소 가져오기
@@ -364,23 +412,34 @@ public class MainActivity extends Activity {
 
     }
     class searchAsync extends AsyncTask<Void,Void,String>{
-
+        List<String> productName = new ArrayList<>();
+        List<String> productKind = new ArrayList<>();
+        String avoidRepeat = newT;
         searchAsync(){
+            Log.e("반복","반복_CONSTRUCT");
             searchList = new ArrayList<>();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.e("반복","반복_PRE");
+            super.onPreExecute();
         }
 
         @Override
         protected String doInBackground(Void... params){
             try {
+                if(avoidRepeat.equals(newT)){
                 URL url = new URL("http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?serviceKey=%2BwvPpNobnpO%2BxNDsB3NdwZqjZYg4C8JqEy7NhZxXof%2F2Owy9Vu2eYP1pZVtIw%2FcPEVTx8nKQ1ph%2F4ppRNxKBLA%3D%3D&prdlstNm="
                         + newT);
-                Log.e("뉴텍",newT);
+                Log.e("뉴텍", newT);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(true);
                 XmlPullParser xpp = factory.newPullParser();
                 BufferedInputStream bis = new BufferedInputStream(url.openStream());
                 xpp.setInput(bis, "utf-8");
-
+                String prdname = "";
+                String prdkind = "";
                 int event_type = xpp.getEventType();
 
                 while (event_type != XmlPullParser.END_DOCUMENT) {
@@ -391,9 +450,18 @@ public class MainActivity extends Activity {
                          * 성분만 가져와 본다.
                          */
                         if (tag.equals("prdlstNm")) {
-                            if(!xpp.getText().equals("\n")){
-                                searchList.add(xpp.getText());
-                                Log.e("제품",xpp.getText());
+                            if (!xpp.getText().equals("\n")) {
+                                //searchList.add(xpp.getText());
+                                prdname = xpp.getText();
+                                productName.add(prdname);
+                                Log.e("제품", xpp.getText());
+                            }
+                        } else if (tag.equals("prdkind")) {
+                            if (!xpp.getText().equals("\n")) {
+                                //searchList.add(xpp.getText());
+                                prdkind = xpp.getText();
+                                productKind.add(prdkind);
+                                Log.e("제품정보", xpp.getText());
                             }
                         }
                     } else if (event_type == XmlPullParser.END_TAG) {
@@ -404,13 +472,23 @@ public class MainActivity extends Activity {
                         }
                         //item별로 분리
                     }
+                    //adapter.addItem(prdname, prdkind);
                     event_type = xpp.next();
                 }
+            }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return newT;
+        }
+
+
+        protected void onPostExecute(String text){
+            for(int i = 0; i < productKind.size(); i++){
+                adapter.addItem(productName.get(i),productKind.get(i));
+                adapter.notifyDataSetChanged();
+            }
         }
     }
     class materialParser extends AsyncTask<String, String, String> {
@@ -584,6 +662,7 @@ public class MainActivity extends Activity {
                             intent_PDInfo.putExtra("No성분Name", No_Additives_Name);
                             //intent_PDInfo.putExtra("No성분Num", No_Additives_Num);
                             Log.d("성분EWG", Additives_EWG.toString());
+                            search_list.setVisibility(View.GONE);
                             startActivity(intent_PDInfo);
                         }
                     }
