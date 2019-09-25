@@ -13,8 +13,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class Setting_Activity extends Activity {
-    ToggleButton Start_Barcode;
-    ToggleButton Self_Login;
+    Switch Start_Barcode;
+    Switch Self_Login;
 
     private SharedPreferences auto;
     private SharedPreferences.Editor autoLogin;
@@ -48,13 +48,13 @@ public class Setting_Activity extends Activity {
 
 
 
-        Start_Barcode = (ToggleButton)findViewById(R.id.Switch);
-        Self_Login = (ToggleButton)findViewById(R.id.Switch2);
+        Start_Barcode = (Switch)findViewById(R.id.Switch);
+        Self_Login = (Switch)findViewById(R.id.Switch2);
+
 
         Start_Barcode.setChecked(Ready);
         Self_Login.setChecked(Self_Login_Ready);
         Log.d("Ready1", ""+Ready);
-
 
 
         Start_Barcode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

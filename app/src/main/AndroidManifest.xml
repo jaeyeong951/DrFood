@@ -58,7 +58,6 @@
 
         </activity>
         <activity android:name=".Setting_Activity"
-            android:theme="@android:style/Theme.Dialog"
             android:configChanges="screenSize|orientation"/>
 
     </application>

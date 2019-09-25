@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#eeeeee"
     android:orientation="vertical"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <!-- 타이틀바 -->
     <LinearLayout
@@ -22,64 +22,36 @@
     <!-- //end 타이틀바 -->
 
     <!-- Notice -->
-    <LinearLayout
-        android:padding="1dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <TextView
-            android:id="@+id/Rseq0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="시작 화면 바코드 모드"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_marginTop="19dp"
-            android:layout_marginLeft="23dp"
-            android:padding="5dp"
-            />
-        <ToggleButton
-            android:id="@+id/Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:switchMinWidth="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="5dp"
-            />
+    <Switch
+        android:id="@+id/Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="시작화면 바코드 모드"
+        android:textSize="20dp"
+        android:switchMinWidth="60dp"
+        android:switchPadding="20dp"
+        />
 
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-        <TextView
-            android:id="@+id/Rseq1"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="자동로그인 모드"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_marginTop="19dp"
-            android:layout_marginLeft="23dp"
-            android:padding="5dp"
-            />
-        <ToggleButton
-            android:id="@+id/Switch2"
-            android:layout_width="wrap_content"
-            android:layout_height="43dp"
-            android:switchMinWidth="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="5dp"
-            />
+    <Switch
+        android:id="@+id/Switch2"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:text="자동로그인                "
+        android:switchMinWidth="60dp"
+        android:switchPadding="20dp"
+        />
 
 
 
 
-    </LinearLayout>
     <!-- Notice -->
+
+
 
     <View
         android:background="#66bdbdbd"

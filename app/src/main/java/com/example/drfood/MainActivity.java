@@ -50,8 +50,7 @@ public class MainActivity extends Activity {
     ImageButton Setting;
     ImageButton UserButton;
     materialParser pharm;
-    searchAsync searchAsync;
-    String newT;
+
     private final static int CAMERA_PERMISSIONS_GRANTED = 100;
 
     //데이터 베이스 쪽
@@ -63,6 +62,7 @@ public class MainActivity extends Activity {
     String rawMaterial;
     String tag;
     String allergy;
+    String newT;
 
 
     //시작모드 바코드 모드 관련
@@ -498,7 +498,7 @@ public class MainActivity extends Activity {
             String[] rawMaterialSplited = new String[8];
             String[] allergyListSplited = new String[8];
             if(rawMaterial != null && rawMaterial != "") {
-                rawMaterialSplited = rawMaterial.split("\\●|\\#|\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s|\\;|\\.|[0-9]");
+                rawMaterialSplited = rawMaterial.split("\\(|\\)|\\{|\\}|\\[|\\]|\\,|\\s|\\;");
             }
             if(allergy != null && rawMaterial != "") {
                 allergyListSplited = allergy.split("\\,|\\s|\\(|\\)");

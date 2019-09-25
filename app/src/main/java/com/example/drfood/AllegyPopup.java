@@ -72,6 +72,112 @@ public class AllegyPopup extends Activity {
 
                 tv.setTextColor(Color.BLACK);
 
+                if(tv.getText().equals("게")){
+
+                }else if(tv.getText().equals("새우")){
+
+                }
+                else if(tv.getText().equals("땅콩")){
+
+                }
+                else if(tv.getText().equals("호두")){
+
+                }
+                else if(tv.getText().equals("대두")){
+
+                }
+                else if(tv.getText().equals("밀")){
+
+                }
+                else if(tv.getText().equals("메밀")){
+
+                }
+                else if(tv.getText().equals("우유")){
+
+                }
+                else if(tv.getText().equals("난류")){
+
+                }
+                else if(tv.getText().equals("생선류")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+                else if(tv.getText().equals("게")){
+
+                }
+
+
                 // Generate ListView Item using TextView
                 return view;
             }
