@@ -59,6 +59,8 @@
 
         </activity>
         <activity android:name=".Setting_Activity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"
+
             android:configChanges="screenSize|orientation"/>
 
     </application>
