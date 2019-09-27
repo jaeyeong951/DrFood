@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/fredoka_one"
+        android:fontFamily="@font/nunito"
         android:text="Dr.Food"
         android:textColor="#a0e8b8"
         android:textSize="50dp"
@@ -211,8 +212,8 @@
 
         <ImageButton
             android:id="@+id/human"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
@@ -222,8 +223,8 @@
 
         <ImageButton
             android:id="@+id/setting"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
@@ -243,6 +244,14 @@
         android:adjustViewBounds="true"
         android:background="@drawable/barcode_round"
         android:scaleType="fitCenter" />
+
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="153dp"
+        android:background="#F3FFFA" />
 
 
 </RelativeLayout>
