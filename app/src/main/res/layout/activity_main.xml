@@ -5,17 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/fredoka_one"
         android:text="Dr.Food"
         android:textColor="#a0e8b8"
-        android:textStyle="bold"
         android:textSize="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        />
+        android:textStyle="bold" />
 
     <SearchView
         android:id="@+id/search_ex"
@@ -72,14 +73,6 @@
         android:layout_marginTop="25dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/drop_shadow">
-
-        <RelativeLayout
-            android:id="@+id/edge"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#1B000000"
-            android:layout_marginTop="40dp">
-        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ewg란"
@@ -218,8 +211,8 @@
 
         <ImageButton
             android:id="@+id/human"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
@@ -229,8 +222,8 @@
 
         <ImageButton
             android:id="@+id/setting"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
@@ -250,14 +243,6 @@
         android:adjustViewBounds="true"
         android:background="@drawable/barcode_round"
         android:scaleType="fitCenter" />
-
-    <ListView
-        android:id="@+id/search_list"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="153dp"
-        android:background="#F3FFFA" />
 
 
 </RelativeLayout>
