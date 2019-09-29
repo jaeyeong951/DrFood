@@ -7,7 +7,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         //구글 데이터 베이스 필요
         classpath 'com.google.gms:google-services:4.2.0'
         
