@@ -124,18 +124,19 @@ public class LoginPageAct extends AppCompatActivity {
             Log.e("오류시작", "1");
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                Log.e("오류시작","1-2");
+                //Log.e("오류시작","1-2");
+                //Toast.makeText(LoginPageAct.this,"가즈아1!",Toast.LENGTH_SHORT).show();
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.e("오류시작", account.getId());
-                Log.e("오류시작", account.getEmail());
-                Log.e("오류시작", account.getIdToken());
+                //Log.e("오류시작", account.getId());
+                //Log.e("오류시작", account.getEmail());
+                //Log.e("오류시작", account.getIdToken());
                 firebaseAuthWithGoogle(account);
                 Log.e("오류시작", "3");
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("Errore", "Google sign in failed", e);
                 // [START_EXCLUDE]
-
+                Toast.makeText(LoginPageAct.this,"Google sign in failed" +e ,Toast.LENGTH_SHORT).show();
                 // updateUI(null);
                 // [END_EXCLUDE]
             }
@@ -152,6 +153,7 @@ public class LoginPageAct extends AppCompatActivity {
         Log.d("맞나", "제발");
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         Log.d("맞나", "제발1");
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -237,6 +239,7 @@ public class LoginPageAct extends AppCompatActivity {
                         // [END_EXCLUDE]
                     }
                 });
+
     }
     // [END auth_with_google]
 

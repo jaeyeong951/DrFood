@@ -387,9 +387,9 @@ public class MainActivity extends Activity {
             Trans_Allegy_Exgist_index = data.getStringExtra("Trans_Allegy_Exgist_index");
             Allegy_Exgist_Num = data.getIntExtra("Allegy_Exgist_Num", 0);
             Allegy_Exgist_index = data.getIntegerArrayListExtra("Allegy_Exgist_index");
-            Log.d("Trans다다다", Trans_Allegy_Exgist_index);
-            Log.d("Trans다다다", Allegy_Exgist_Num +"");
-            Log.d("Trans다다다", Allegy_Exgist_index.get(0)+ "");
+            //Log.d("Trans다다다", Trans_Allegy_Exgist_index);
+            //Log.d("Trans다다다", Allegy_Exgist_Num +"");
+            //Log.d("Trans다다다", Allegy_Exgist_index.get(0)+ "");
         }
         else if(requestCode == 3200){
             Ready = data.getBooleanExtra("Ready", false);
