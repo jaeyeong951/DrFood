@@ -28,4 +28,21 @@
  정찬형 : 식품 정보 정보 조사
  
 # 실행 화면
+로그인 동영상(구글 자동 로그인)
+
+https://user-images.githubusercontent.com/38696775/129273723-104012f2-029b-4a10-b86a-79229508db41.mp4
+
+
+바코드 모드 및 식품 성분 표시
+
+https://user-images.githubusercontent.com/38696775/129273883-adf109a2-1618-4353-b66f-f366f0b12505.mp4
+
+고객 알러지 식품 설정 및 그에 따른 식품 알러지 성분 표시
+
+https://user-images.githubusercontent.com/38696775/129273888-ceaae825-7498-4396-a0b2-ad6af907651a.mp4
+
+
+
+#클래스 개요
+
 
