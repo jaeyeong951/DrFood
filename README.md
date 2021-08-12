@@ -43,6 +43,3 @@ https://user-images.githubusercontent.com/38696775/129273888-ceaae825-7498-4396-
 
 
 
-#클래스 개요
-
-
